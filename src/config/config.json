@@ -1,0 +1,44 @@
+{
+  "site": {
+    "title": "Slingshotteck",
+    "base_url": "https://www.slingshotgrowth.com",
+    "base_path": "/",
+    "trailing_slash": false,
+    "favicon": "/images/favicon.png",
+    "logo": "/images/slingshot-logo.png",
+    "logo_width": "73",
+    "logo_height": "56",
+    "logo_text": "Slingshotteck"
+  },
+  "settings": {
+    "sticky_header": true
+  },
+  "params": {
+    "contact_form_action": "#",
+    "checklist_form_action": "#",
+    "apply_form_action": "#",
+    "copyright": "Copyright &copy; 2025-2026 <strong>slingshotteck</strong>. All rights reserved.",
+    "footer_tagline": "Growth systems for ambitious local businesses.",
+    "footer_email": "support@slingshotteck.com",
+    "footer_phone": "+44 7398066965"
+  },
+  "navigation_button": {
+    "enable": true,
+    "label": "Book a Strategy Call",
+    "link": "/contact"
+  },
+  "whatsapp": {
+    "enable": true,
+    "number": "+44 7398066965",
+    "message": "Hi, I'd like to know more about your services."
+  },
+  "google_tag_manager": {
+    "enable": false,
+    "gtm_id": "GTM-XXXXXX"
+  },
+  "metadata": {
+    "meta_author": "Slingshot Growth",
+    "meta_image": "/images/og-image.png",
+    "meta_description": "Growth systems for ambitious local businesses: lead generation, CRM and automation that turn enquiries into booked jobs."
+  }
+}

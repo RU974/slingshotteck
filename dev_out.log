@@ -1,0 +1,23 @@
+
+> slingshot-growth@1.0.1 dev
+> concurrently "node scripts/themeGenerator.js --watch" "astro dev"
+
+[0] ✅ Theme CSS generated successfully at: G:\slingshot\src\styles\generated-theme.css
+[0] 👁️  Watching for changes to: G:\slingshot\src\config\theme.json
+[1] {"message":"Dev server already running at http://localhost:4321 (pid 8168)\n  Stop:   astro dev stop\n  Status: astro dev status\n  Logs:   astro dev logs","label":"SKIP_FORMAT","level":"info"}
+[1] astro dev exited with code 0
+[0] ✅ Theme CSS generated successfully at: G:\slingshot\src\styles\generated-theme.css
+[0] ✅ Theme CSS generated successfully at: G:\slingshot\src\styles\generated-theme.css
+[0] ✅ Theme CSS generated successfully at: G:\slingshot\src\styles\generated-theme.css
+[0] ✅ Theme CSS generated successfully at: G:\slingshot\src\styles\generated-theme.css
+[0] ✅ Theme CSS generated successfully at: G:\slingshot\src\styles\generated-theme.css
+[0] ✅ Theme CSS generated successfully at: G:\slingshot\src\styles\generated-theme.css
+[0] ✅ Theme CSS generated successfully at: G:\slingshot\src\styles\generated-theme.css
+[0] ✅ Theme CSS generated successfully at: G:\slingshot\src\styles\generated-theme.css
+[0] ✅ Theme CSS generated successfully at: G:\slingshot\src\styles\generated-theme.css
+[0] ✅ Theme CSS generated successfully at: G:\slingshot\src\styles\generated-theme.css
+[0] ✅ Theme CSS generated successfully at: G:\slingshot\src\styles\generated-theme.css
+[0] ✅ Theme CSS generated successfully at: G:\slingshot\src\styles\generated-theme.css
+[0] ✅ Theme CSS generated successfully at: G:\slingshot\src\styles\generated-theme.css
+[0] ✅ Theme CSS generated successfully at: G:\slingshot\src\styles\generated-theme.css
+[0] ✅ Theme CSS generated successfully at: G:\slingshot\src\styles\generated-theme.css

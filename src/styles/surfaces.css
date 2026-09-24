@@ -1,0 +1,213 @@
+/* Modern dark surfaces — translucent card fill, hairline border, soft glow on
+   hover. Kept unlayered so it overrides Tailwind utilities. */
+:root {
+  --surface: rgba(255, 255, 255, 0.04);
+  --surface-hover: rgba(255, 255, 255, 0.07);
+  --surface-inset: rgba(0, 0, 0, 0.28);
+  --surface-border: rgba(255, 255, 255, 0.09);
+  --surface-border-hover: rgba(96, 150, 240, 0.45);
+  --surface-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.07);
+  --surface-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.55);
+  --surface-glow: 0 0 0 1px rgba(96, 150, 240, 0.18),
+    0 16px 40px -14px rgba(47, 111, 224, 0.45);
+  --accent-glow: rgba(34, 211, 238, 0.35);
+  --focus-ring: 0 0 0 3px rgba(47, 111, 224, 0.35);
+}
+
+/* Cards / panels: any rounded element using the light or translucent surface */
+[class*="bg-light"][class*="rounded"]:not([class*="hover:bg-light"]),
+[class*="bg-white/5"][class*="rounded"]:not([class*="size-"]),
+.section-box,
+.accordion,
+.tab,
+.notice,
+.nav-dropdown-list,
+.modal-content {
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  box-shadow: var(--surface-highlight), var(--surface-shadow);
+  transition:
+    box-shadow 0.3s ease,
+    border-color 0.3s ease,
+    background-color 0.3s ease,
+    transform 0.3s ease;
+}
+
+.modal-content {
+  background: var(--color-body);
+}
+.notice {
+  border-color: currentColor;
+}
+
+[class*="bg-light"][class*="rounded"]:not([class*="hover:bg-light"]):hover,
+[class*="bg-white/5"][class*="rounded"]:not([class*="size-"]):hover,
+.accordion:hover {
+  background: var(--surface-hover);
+  border-color: var(--surface-border-hover);
+  box-shadow: var(--surface-highlight), var(--surface-glow);
+}
+.section-box:hover,
+.tab:hover,
+.notice:hover {
+  background: var(--surface);
+  box-shadow: var(--surface-highlight), var(--surface-shadow);
+}
+
+/* Small icon wells inside cards */
+[class*="bg-white/5"][class*="size-"],
+.accordion-icon,
+.tab-nav,
+.modal-close {
+  background: rgba(47, 111, 224, 0.12);
+  border: 1px solid rgba(96, 150, 240, 0.22);
+  box-shadow: none;
+}
+
+.accordion.active {
+  border-color: var(--surface-border-hover);
+  background: var(--surface-hover);
+}
+
+/* Buttons */
+.btn-primary {
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.25),
+    0 8px 20px -8px rgba(47, 111, 224, 0.6);
+}
+.btn-primary:hover {
+  transform: translateY(-1px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.3),
+    0 12px 28px -8px var(--accent-glow), 0 12px 28px -8px rgba(47, 111, 224, 0.6);
+}
+.btn-primary:active {
+  transform: translateY(0);
+  filter: brightness(0.95);
+}
+
+.btn-outline,
+.btn-outline-primary {
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+  box-shadow: var(--surface-highlight);
+}
+.btn-outline:hover,
+.btn-outline-primary:hover {
+  background: var(--surface-hover);
+  border-color: var(--surface-border-hover);
+  color: #fff;
+  transform: translateY(-1px);
+  box-shadow: var(--surface-highlight), 0 8px 24px -10px rgba(47, 111, 224, 0.6);
+}
+
+/* Social icons */
+.social-icons li a {
+  background: var(--surface);
+  border: 1px solid var(--surface-border);
+}
+.social-icons li a:hover {
+  background: rgba(47, 111, 224, 0.18);
+  border-color: var(--surface-border-hover);
+  color: #fff;
+}
+
+/* Form fields */
+.form-input,
+input:not([type="checkbox"]):not([type="radio"]):not([type="submit"]),
+textarea,
+select {
+  background: var(--surface-inset);
+  border: 1px solid var(--surface-border);
+  box-shadow: none;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+.form-input:focus,
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--surface-border-hover);
+  box-shadow: var(--focus-ring);
+  outline: none;
+}
+
+/* Active tab */
+.tab-nav-item.active {
+  border-color: var(--color-primary);
+  color: #fff;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Hover lift on cards */
+[class*="bg-light"][class*="rounded"]:not([class*="hover:bg-light"]):hover,
+[class*="bg-white/5"][class*="rounded"]:not([class*="size-"]):hover {
+  transform: translateY(-4px);
+}
+
+/* Cursor-following spotlight on bento cards */
+.bento-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  background: radial-gradient(
+    380px circle at var(--mx, 50%) var(--my, 50%),
+    rgba(56, 189, 248, 0.14),
+    transparent 65%
+  );
+}
+.bento-card:hover::before {
+  opacity: 1;
+}
+.bento-card > * {
+  position: relative;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [class*="bg-light"][class*="rounded"]:hover,
+  [class*="bg-white/5"][class*="rounded"]:hover {
+    transform: none;
+  }
+}
+
+/* Pricing: highlighted recommended plan */
+.pricing-card-featured,
+.pricing-card-featured:hover {
+  background:
+    linear-gradient(var(--color-body), var(--color-body)) padding-box,
+    linear-gradient(150deg, #7db0ff, rgba(255, 255, 255, 0.08) 45%, #22d3ee)
+      border-box;
+  border: 1px solid transparent;
+  box-shadow:
+    0 30px 80px -30px rgba(47, 111, 224, 0.6),
+    0 0 60px -20px rgba(34, 211, 238, 0.35);
+}
+@media (min-width: 1280px) {
+  .pricing-card-featured {
+    transform: translateY(-14px);
+  }
+  .pricing-card-featured:hover {
+    transform: translateY(-18px);
+  }
+}
+.pricing-badge {
+  color: #04121a;
+  background: linear-gradient(135deg, #7db0ff, #22d3ee);
+}
+
+/* Consistent avatar / image treatment */
+.avatar-ring {
+  border: 2px solid rgba(96, 150, 240, 0.5);
+  box-shadow: 0 0 0 4px rgba(47, 111, 224, 0.15);
+  object-fit: cover;
+}

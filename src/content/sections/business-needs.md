@@ -1,0 +1,26 @@
+---
+enable: true
+badge: ""
+title: "Our <strong>delivery approach</strong>"
+items:
+  - image: "/images/brands-group-1.png"
+    number: "01"
+    title: "DISCOVER"
+    content: "We learn your business, audit your current systems, and identify the risks and opportunities that matter most."
+  - image: "/images/brands-group-2.png"
+    number: "02"
+    title: "DESIGN"
+    content: "We design the right architecture, network, or product configuration, with clear scope, timelines, and costs."
+  - image: "/images/brands-group-3.png"
+    number: "03"
+    title: "BUILD"
+    content: "Our engineers develop, configure, and integrate your solution, whether it is custom software or a product rollout."
+  - image: "/images/brands-group-4.png"
+    number: "04"
+    title: "DEPLOY"
+    content: "We launch with minimal disruption, migrate your data safely, and train your team to get value from day one."
+  - image: "/images/brands-group-5.png"
+    number: "05"
+    title: "SUPPORT"
+    content: "Our managed services team monitors, secures, and improves your environment long after go-live."
+---
