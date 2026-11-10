@@ -60,7 +60,30 @@ export default defineConfig({
   fonts: fontsConfig,
   integrations: [
     react(),
-    sitemap(),
+    sitemap({
+      // Keep thin / utility pages out of the sitemap (they are also noindex).
+      filter: (page) =>
+        !/\/careers\/[^/]+/.test(page) &&
+        !/\/(elements|404|api)(\/|$)/.test(page) &&
+        !page.includes("/thank-you"),
+      changefreq: "weekly",
+      priority: 0.7,
+      lastmod: new Date(),
+      serialize(item) {
+        const url = item.url.replace(/\/$/, "");
+        const root = (config.site.base_url || "").replace(/\/$/, "");
+        if (url === root) {
+          item.priority = 1.0;
+          item.changefreq = "daily";
+        } else if (/\/(services|hrms|crm)(\/|$)/.test(url)) {
+          item.priority = 0.9;
+        } else if (/\/blog\//.test(url)) {
+          item.priority = 0.6;
+          item.changefreq = "monthly";
+        }
+        return item;
+      },
+    }),
     AutoImport({
       imports: [
         "@/shortcodes/Button",

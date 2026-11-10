@@ -33,8 +33,8 @@
 .section-intro[data-eyebrow]::before {
   content: attr(data-eyebrow);
   @apply inline-block mb-1 rounded-full px-3.5 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-accent;
-  background: rgba(34, 211, 238, 0.08);
-  border: 1px solid rgba(34, 211, 238, 0.25);
+  background: rgba(245, 165, 36, 0.08);
+  border: 1px solid rgba(245, 165, 36, 0.3);
 }
 .section-intro .subtitle {
   @apply leading-relaxed text-text-dark;
@@ -70,6 +70,10 @@
 /* Highlight */
 .hasHighlight strong {
   @apply text-primary;
+  background: linear-gradient(100deg, #6b93ff 0%, var(--color-primary) 55%, #8fb0ff 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* notice */
@@ -305,7 +309,7 @@ ul.green-tick-list {
 }
 .bento-preview img {
   @apply w-[92%] ml-[8%] rounded-tl-xl border border-white/10 border-r-0 border-b-0;
-  box-shadow: -20px -10px 50px -20px rgba(47, 111, 224, 0.5);
+  box-shadow: -20px -10px 50px -20px rgba(59, 111, 245, 0.5);
   transition: transform 0.5s ease;
 }
 .bento-product:hover .bento-preview img {
@@ -317,8 +321,8 @@ ul.green-tick-list {
 }
 .bento-icon {
   @apply mb-6 grid size-14 place-items-center rounded-2xl;
-  background: rgba(47, 111, 224, 0.14);
-  border: 1px solid rgba(96, 150, 240, 0.25);
+  background: rgba(59, 111, 245, 0.14);
+  border: 1px solid rgba(120, 155, 250, 0.25);
 }
 .bento-icon img {
   @apply size-7;
@@ -328,18 +332,76 @@ ul.green-tick-list {
   .bento-s2 { grid-column: span 2; }
   .bento-s3 { grid-column: span 2; }
   .bento-s4 { grid-column: span 4; }
-  .bento-s5 { grid-column: span 6; }
+  .bento-s5 { grid-column: span 3; }
+  .bento-s6 { grid-column: span 3; }
   .bento-s1 ul,
-  .bento-s4 ul,
-  .bento-s5 ul {
+  .bento-s4 ul {
     @apply grid sm:grid-cols-3 gap-x-6;
   }
   .bento-s1 ul li,
-  .bento-s4 ul li,
-  .bento-s5 ul li {
+  .bento-s4 ul li {
     @apply mb-1;
   }
 }
-@media (min-width: 640px) and (max-width: 1023px) {
-  .bento-s5 { grid-column: span 2; }
+
+/* ---------- Hero polish ---------- */
+.hero-badge {
+  @apply inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-sm font-medium text-text-light;
+  background: rgba(59, 111, 245, 0.12);
+  border: 1px solid rgba(120, 155, 250, 0.3);
+  backdrop-filter: blur(8px);
+}
+.hero-badge-dot {
+  @apply inline-block size-2 rounded-full bg-accent;
+  box-shadow: 0 0 0 4px rgba(245, 165, 36, 0.2);
+}
+.hero-trust {
+  @apply flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-text-dark;
+}
+.hero-trust li {
+  @apply inline-flex items-center gap-2;
+}
+
+/* ---------- Technology strip ---------- */
+.tech-strip {
+  @apply flex flex-wrap justify-center gap-3 md:gap-4;
+}
+.tech-strip li {
+  @apply inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-medium text-text;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: color 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+}
+.tech-strip li:hover {
+  @apply text-white;
+  border-color: rgba(120, 155, 250, 0.45);
+  background: rgba(59, 111, 245, 0.1);
+}
+
+/* Section dividers & headings: a touch more contrast */
+.section-intro .title {
+  letter-spacing: -0.02em;
+}
+h1 {
+  letter-spacing: -0.03em;
+}
+
+.badge-brand {
+  background: rgba(245, 165, 36, 0.08);
+  border: 1px solid rgba(245, 165, 36, 0.3);
+}
+
+/* Product lockup (logo + product name) */
+.product-lockup {
+  @apply inline-flex items-center gap-4 rounded-2xl px-5 py-3;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(120, 155, 250, 0.25);
+  backdrop-filter: blur(8px);
+}
+.product-lockup-divider {
+  @apply block h-10 w-px;
+  background: rgba(255, 255, 255, 0.2);
+}
+.product-lockup-name {
+  @apply font-secondary text-2xl font-bold tracking-wide text-white;
 }

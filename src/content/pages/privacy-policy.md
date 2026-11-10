@@ -8,7 +8,7 @@ draft: false
 
 **Last updated: 23 September 2026**
 
-Slingshotteck ("we", "us", "our") provides growth systems for local service businesses. We respect your privacy and are committed to protecting your personal information. This Privacy Policy explains what we collect, why we collect it, how we use and protect it, and the choices and rights you have.
+Slingshotteck ("we", "us", "our") provides software products (HRMS and CRM), custom software development and IT services, including managed IT, networking, cybersecurity, cloud and IT consulting. We respect your privacy and are committed to protecting your personal information. This Privacy Policy explains what we collect, why we collect it, how we use and protect it, and the choices and rights you have.
 
 By using our website at [www.slingshotteck.com](https://www.slingshotteck.com) or contacting us about our services, you acknowledge that you have read this policy.
 

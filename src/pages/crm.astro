@@ -1,5 +1,6 @@
 ---
 import DynamicIcon from "@/helpers/DynamicIcon";
+import config from "@/config/config.json";
 import Base from "@/layouts/Base.astro";
 import Badge from "@/layouts/components/Badge.astro";
 import CallToAction from "@/layouts/components/CallToAction.astro";
@@ -13,9 +14,38 @@ import type { Crm } from "@/types";
 
 const crm = await getListPage("crm", "-index");
 const crmData: Crm = crm.data;
+
+const siteUrl = config.site.base_url.replace(/\/$/, "");
+const productSchema = {
+  "@type": "SoftwareApplication",
+  "@id": `${siteUrl}/crm#software`,
+  name: "Slingshotteck CRM",
+  applicationCategory: "BusinessApplication",
+  applicationSubCategory: "Customer relationship management (CRM)",
+  operatingSystem: "Web browser",
+  url: `${siteUrl}/crm`,
+  description: crmData.description,
+  image: `${siteUrl}/images/crm/crm-leads-board.png`,
+  publisher: { "@id": `${siteUrl}/#organization` },
+  featureList: [
+    "Lead and contact management",
+    "Visual sales pipeline",
+    "Quotes",
+    "Email, call and task automation",
+    "Customer support and ticketing",
+    "Sales reporting dashboards",
+  ],
+};
+const crmFaqs = [
+  { question: "What is a CRM?", answer: "A CRM (customer relationship management) system stores every lead, contact, deal and conversation in one place, so sales and support teams can follow up on time and managers can forecast revenue." },
+  { question: "Who is Slingshotteck CRM for?", answer: "Growing sales and support teams, from small businesses to mid-sized companies, that have outgrown spreadsheets and inboxes and want a clear pipeline with automated follow-up." },
+  { question: "Does Slingshotteck CRM integrate with our HRMS and other tools?", answer: "Yes. It shares a platform with Slingshotteck HRMS, and we can integrate it with email, telephony, accounting and payment systems through our <a href='/services/custom-software-development'>development team</a>." },
+  { question: "How much does Slingshotteck CRM cost?", answer: "CRM plans are quoted based on team size and required features. <a href='/contact'>Contact us</a> for a tailored proposal and demo." },
+  { question: "Can you migrate our data from another CRM or spreadsheets?", answer: "Yes. We import contacts, companies, deals and history from spreadsheets and most popular CRMs as part of onboarding." },
+];
 ---
 
-<Base {...crmData}>
+<Base {...crmData} schema={productSchema}>
   <!-- Banner -->
   <section class="section-ph relative overflow-hidden pb-20">
     <div class="container relative">
@@ -26,6 +56,18 @@ const crmData: Crm = crm.data;
       </div>
       <div class="row justify-center">
         <div class="mb-20 text-center relative">
+          <div class="product-lockup mb-8">
+            <ImageMod
+              src="/images/slingshot-logo-light.png"
+              alt="Slingshotteck logo"
+              width={184}
+              height={142}
+              class="h-14 w-auto"
+              format="webp"
+            />
+            <span class="product-lockup-divider" aria-hidden="true"></span>
+            <span class="product-lockup-name">CRM</span>
+          </div>
           <h1
             class="mb-8 lg:col-9 mx-auto text-h3 lg:text-h1 hasHighlight"
             set:html={markdownify(crmData.banner.title)}
@@ -209,7 +251,7 @@ const crmData: Crm = crm.data;
   }
 
   <!-- FAQ -->
-  <Faq />
+  <Faq title="CRM software: frequently asked questions" items={crmFaqs} />
 
   <!-- Call to Action -->
   <CallToAction />

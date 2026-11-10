@@ -1,5 +1,6 @@
 ---
 import ImageMod from "@/layouts/components/ImageMod.astro";
+import DynamicIcon from "@/helpers/DynamicIcon";
 import Base from "@/layouts/Base.astro";
 import ValueCard from "@/layouts/components/ValueCard.astro";
 import BusinessNeeds from "@/layouts/components/BusinessNeeds.astro";
@@ -24,7 +25,10 @@ const homepageData: Homepage = homepage.data;
 const { checklist_form_action } = config.params;
 ---
 
-<Base>
+<Base
+  meta_title="Software Development & Managed IT Services | Slingshotteck"
+  description="Custom software, SaaS & ERP development, HRMS and CRM, plus managed IT, network security, cloud and cybersecurity for the UK, USA and Pakistan."
+>
   <!-- Banner -->
   <section class="section-ph relative overflow-hidden">
     <div class="container relative">
@@ -35,6 +39,10 @@ const { checklist_form_action } = config.params;
       </div>
       <div class="row justify-center">
         <div class="mb-20 text-center relative">
+          <span class="hero-badge mb-6">
+            <span class="hero-badge-dot" aria-hidden="true"></span>
+            Software &amp; IT partner for the UK, USA &amp; Pakistan
+          </span>
           <h1
             class="mb-8 lg:col-9 mx-auto text-h3 lg:text-h1 hasHighlight"
             set:html={markdownify(homepageData.banner.title)}
@@ -56,6 +64,19 @@ const { checklist_form_action } = config.params;
               {homepageData.banner.button_secondary.label}
             </a>
           </div>
+          <ul class="hero-trust mt-8">
+            {[
+              "Free consultation",
+              "NDA on request",
+              "UK & US business hours",
+              "You own the code",
+            ].map((t) => (
+              <li>
+                <DynamicIcon icon="FaCircleCheck" className="text-accent" aria-hidden="true" />
+                {t}
+              </li>
+            ))}
+          </ul>
         </div>
         <div class="col-12">
           <div
@@ -214,6 +235,32 @@ const { checklist_form_action } = config.params;
       </svg>
     </div>
   </section>
+  <!-- Technology strip -->
+  <section class="pb-16 xl:pb-20" aria-labelledby="tech-heading">
+    <div class="container">
+      <p id="tech-heading" class="text-center text-sm uppercase tracking-[0.2em] text-text-dark mb-8">
+        Technologies and platforms we work with
+      </p>
+      <ul class="tech-strip">
+        {[
+          ["FaAws", "AWS"],
+          ["FaMicrosoft", "Microsoft Azure"],
+          ["FaGoogle", "Google Cloud"],
+          ["FaLaravel", "Laravel"],
+          ["FaPhp", "PHP"],
+          ["FaReact", "React"],
+          ["FaNodeJs", "Node.js"],
+          ["FaDocker", "Docker"],
+          ["FaLinux", "Linux"],
+        ].map(([icon, name]) => (
+          <li title={name}>
+            <DynamicIcon icon={icon} className="text-2xl" aria-hidden="true" />
+            <span>{name}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
   <hr
     class="h-px bg-linear-to-r from-transparent from-10% via-white/50 to-90% to-transparent border-0"
   />
@@ -351,15 +398,28 @@ const { checklist_form_action } = config.params;
                 {homepageData.services.items.map((item: any, i: number) => (
                   <div class={`bento-card bento-service bento-s${i + 1} p-8 rounded-3xl bg-white/5`}>
                     <div class="bento-icon">
-                      <ImageMod src={item.logo} alt={`${item.title} icon`} />
+                      <ImageMod src={item.logo} alt="" aria-hidden="true" />
                     </div>
-                    <h3 class="text-h5-sm font-bold">{item.title}</h3>
+                    <h3 class="text-h5-sm font-bold">
+                      {item.link ? (
+                        <a href={item.link} class="hover:text-primary transition-colors">
+                          {item.title}
+                        </a>
+                      ) : (
+                        item.title
+                      )}
+                    </h3>
                     <p class="mt-3 text-text-dark">{item.description}</p>
                     <ul class="stars-list mt-5 text-text-dark">
                       {item.list.map((l: string) => (
                         <li>{l}</li>
                       ))}
                     </ul>
+                    {item.link && (
+                      <a href={item.link} class="mt-5 inline-block text-primary font-semibold" aria-label={`Learn more about ${item.title}`}>
+                        Learn more &rarr;
+                      </a>
+                    )}
                   </div>
                 ))}
               </div>

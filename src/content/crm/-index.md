@@ -1,12 +1,12 @@
 ---
 title: "CRM"
-meta_title: "Slingshotteck CRM - Customer Relationship Management Software"
-description: "Capture every lead, manage your pipeline, and keep customers engaged with a CRM your whole sales and support team can use."
+meta_title: "CRM Software for Sales & Support Teams | Slingshotteck CRM"
+description: "Slingshotteck CRM: lead and contact management, visual sales pipeline, quotes, follow-up automation and reporting for growing sales teams."
 image: ""
 draft: false
 
 banner:
-  title: "Customer Relationship Management That <br /> Drives <strong>More Closed Deals</strong>"
+  title: "CRM software that helps your team <br /> close <strong>more deals</strong>"
   content: "Slingshotteck CRM brings your leads, pipeline, and customer conversations into one connected platform, so nothing falls through the cracks."
   button_primary:
     enable: true

@@ -1,15 +1,15 @@
 ---
 banner:
-  title: "Software products and IT services to <strong>power your business</strong>"
-  content: "Slingshotteck builds business software, HRMS and CRM, and delivers the networking, cloud, development, consulting, and managed IT services that keep your company running and growing."
+  title: "Software development and managed IT services to <strong>power your business</strong>"
+  content: "Slingshotteck is a software development and IT services company. We build custom software, SaaS and ERP systems, our own HRMS and CRM, and provide managed IT, network security, cloud and cybersecurity services for businesses in the UK, USA, Pakistan and worldwide."
   button_primary:
     enable: true
     label: "Talk to an Expert"
     link: "/contact"
   button_secondary:
     enable: true
-    label: "Explore Our Solutions"
-    link: "#products"
+    label: "Explore Our Services"
+    link: "/services"
 
 main_features:
   enable: true
@@ -59,28 +59,40 @@ services:
   content: "Whether you need infrastructure, cloud, custom software, or a dedicated IT team, our engineers deliver and support it."
   items:
     - logo: "/images/value-proposition/values-icon-1.svg"
-      title: "Networking"
+      title: "Network & Firewall"
+      link: "/services/network-infrastructure"
       description: "Secure, high-performance networks designed for reliability and scale."
       list:
         - "LAN, WAN, and Wi-Fi design"
         - "Firewalls and network security"
         - "VPN and multi-site connectivity"
+    - logo: "/images/value-proposition/values-icon-3.svg"
+      title: "Cybersecurity"
+      link: "/services/cybersecurity"
+      description: "Find and fix weaknesses before attackers do."
+      list:
+        - "Penetration testing"
+        - "Vulnerability assessments"
+        - "Security audits and threat hunting"
     - logo: "/images/value-proposition/values-icon-2.svg"
       title: "Cloud Solutions"
+      link: "/services/cloud-solutions"
       description: "Move to the cloud with confidence and keep your costs under control."
       list:
         - "Cloud migration and setup"
         - "AWS, Azure, and Google Cloud"
         - "Backup and disaster recovery"
     - logo: "/images/value-proposition/values-icon-3.svg"
-      title: "Software Development"
-      description: "Custom web, mobile, and enterprise applications built around your workflows."
+      title: "Custom Software Development"
+      link: "/services/custom-software-development"
+      description: "Custom web apps, SaaS platforms and ERP systems built around your workflows."
       list:
         - "Web and mobile applications"
+        - "SaaS and ERP development"
         - "APIs and system integrations"
-        - "Product design and QA"
     - logo: "/images/value-proposition/values-icon-4.svg"
       title: "IT Consulting"
+      link: "/services/it-consulting"
       description: "Strategic technology guidance so every IT investment supports your business goals."
       list:
         - "IT strategy and roadmaps"
@@ -88,6 +100,7 @@ services:
         - "Digital transformation planning"
     - logo: "/images/value-proposition/values-icon-1.svg"
       title: "Managed IT Services"
+      link: "/services/managed-it-services"
       description: "Proactive support that keeps your people and systems productive."
       list:
         - "24/7 monitoring and helpdesk"
@@ -95,8 +108,8 @@ services:
         - "Vendor and license management"
   button:
     enable: true
-    label: "Discuss Your IT Needs"
-    link: "/contact"
+    label: "View All IT Services"
+    link: "/services"
 
 value_props:
   enable: true
@@ -164,10 +177,10 @@ our_features:
 testimonial_quote:
   enable: true
   title: "Technology should work quietly in the background"
-  quote: "We used to manage a payroll vendor, a CRM vendor, and an IT contractor separately. Slingshotteck now handles the software and the infrastructure, and we finally have one team to call."
+  quote: "Most growing companies juggle a payroll vendor, a CRM vendor, an IT contractor and a cloud provider. Our job is to replace that with one team that builds, secures and supports it all, so you only ever have one number to call."
 
 single_testimonial:
-  enable: true
+  enable: false
   stats:
     - value: "99.9%"
       label: "Uptime on managed systems"
@@ -201,7 +214,7 @@ growth_process:
 
 integrations:
   enable: true
-  title: "Works with the platforms and tools you already use"
+  title: "Integrates with the platforms and tools you already use"
   items:
     - image: "/images/integrations/snapchat.png"
       alt: "snapchat"

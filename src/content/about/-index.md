@@ -1,26 +1,26 @@
 ---
 title: "About Slingshotteck"
-meta_title: "About Slingshotteck - Growth Systems for Local Service Businesses"
-description: "Your growth partner for more enquiries, better follow-up, and predictable revenue."
+meta_title: "About Slingshotteck | Software & IT Services Company"
+description: "Slingshotteck is a software development and IT services company founded by Muhammad Usama Bin Ilyas, serving businesses in the UK, USA and Pakistan."
 image: ""
 draft: false
 
 page_header:
-  title: "Your system for <strong>more booked work</strong>."
-  subtitle: "We help local service businesses stop losing leads to slow follow-up, fragmented tools, and inconsistent customer experience. Slingshotteck brings the essentials together so you can grow with clarity."
+  title: "One team for your <strong>software and IT</strong>."
+  subtitle: "Slingshotteck (Slingshot Tech) builds business software and runs the infrastructure behind it. Founded by full stack developer and network security specialist Muhammad Usama Bin Ilyas, our Lahore-based team helps companies in the UK, USA, Pakistan and worldwide replace scattered vendors with one accountable technology partner."
   image: "/images/about_hero.png"
 
 stats:
   enable: true
   items:
-    - value: "3x"
-      label: "More enquiries"
-    - value: "5x Faster"
-      label: "Response times"
+    - value: "2"
+      label: "In-house products: HRMS and CRM"
+    - value: "6"
+      label: "Core IT and software services"
+    - value: "3+"
+      label: "Markets served: UK, USA, Pakistan"
     - value: "24/7"
-      label: "Lead coverage"
-    - value: "99%"
-      label: "Operational clarity"
+      label: "Monitoring on managed systems"
 
 our_team:
   enable: false
@@ -43,29 +43,29 @@ our_team:
 core_values:
   enable: true
   badge: "Our Core Mission"
-  title: "Helping local businesses <strong>grow without the chaos</strong>"
-  subtitle: "We replace scattered tools and manual follow-up with one clear system so your team can focus on service quality, sales, and repeat business."
+  title: "Helping growing businesses <strong>run on technology that just works</strong>"
+  subtitle: "We combine software engineering with hands-on network, cloud and security operations, so the applications you rely on run on infrastructure that is fast, secure and supported."
   items:
     - logo: "/images/icons/innovation.svg"
-      title: "Simple Systems"
+      title: "Engineering Quality"
       is_starred: false
     - logo: "/images/icons/security.svg"
-      title: "Operational Clarity"
+      title: "Security by Design"
       is_starred: false
     - logo: "/images/icons/collaboration.svg"
-      title: "Local Focus"
+      title: "Global Delivery"
       is_starred: false
     - logo: "/images/icons/result-driven.svg"
       title: "Results-Driven"
       is_starred: false
     - logo: "/images/icons/creativity.svg"
-      title: "Automated Growth"
+      title: "Automation First"
       is_starred: true
     - logo: "/images/icons/innovation.svg"
       title: "Client-Centric"
       is_starred: false
     - logo: "/images/icons/membership.svg"
-      title: "No Hidden Complexity"
+      title: "Transparent Pricing"
       is_starred: false
     - logo: "/images/icons/starred-folder.svg"
       title: "Reliable Support"

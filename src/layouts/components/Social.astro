@@ -11,13 +11,15 @@ export interface ISocial {
 
 <ul class={className}>
   {
-    source.map((social: ISocial) => (
+    source
+      .filter((social: ISocial) => social.link && social.link.trim() !== "")
+      .map((social: ISocial) => (
       <li>
         <a
           aria-label={social.name}
           href={social.link}
           target="_blank"
-          rel="noopener noreferrer nofollow"
+          rel="noopener noreferrer me"
         >
           <span class="sr-only">{social.name}</span>
           <DynamicIcon className="inline-block" icon={social.icon} />

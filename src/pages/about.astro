@@ -7,6 +7,7 @@ import GradientBlob from "@/layouts/components/GradientBlob.astro";
 import ImageMod from "@/layouts/components/ImageMod.astro";
 import OurStory from "@/layouts/components/OurStory.astro";
 import TeamCard from "@/layouts/components/TeamCard.astro";
+import config from "@/config/config.json";
 import { getListPage } from "@/lib/contentParser.astro";
 import { markdownify } from "@/lib/utils/textConverter";
 import Features from "@/partials/Features.astro";
@@ -15,9 +16,36 @@ import type { About } from "@/types";
 
 const about = await getListPage("about", "-index");
 const aboutData: About = about.data;
+const siteUrl = config.site.base_url.replace(/\/$/, "");
+const aboutSchema = [
+  {
+    "@type": "AboutPage",
+    "@id": `${siteUrl}/about#aboutpage`,
+    url: `${siteUrl}/about`,
+    mainEntity: { "@id": `${siteUrl}/#organization` },
+  },
+  {
+    "@type": "Person",
+    "@id": `${siteUrl}/about#founder`,
+    name: "Muhammad Usama Bin Ilyas",
+    jobTitle: "Founder & CEO",
+    worksFor: { "@id": `${siteUrl}/#organization` },
+    knowsAbout: [
+      "Full stack development",
+      "Network security",
+      "Firewalls",
+      "Cybersecurity",
+      "Threat hunting",
+      "Penetration testing",
+      "Cloud infrastructure",
+      "ERP and SaaS development",
+    ],
+    image: `${siteUrl}/images/avatar-lg.png`,
+  },
+];
 ---
 
-<Base {...aboutData}>
+<Base {...aboutData} schema={aboutSchema}>
   <!-- Page Header -->
   <section class="section-ph pb-20 overflow-hidden">
     <div class="container">
@@ -29,7 +57,7 @@ const aboutData: About = about.data;
         <p class="mb-5 text-lg text-text">{aboutData.page_header.subtitle}</p>
         <ImageMod
           src={aboutData.page_header.image}
-          alt="Team collaboration meeting"
+          alt="Slingshotteck team working on software and IT projects"
           class="w-full h-auto object-cover aspect-video lg:aspect-1000/520 rounded-3xl mt-20"
         />
       </div>
@@ -258,7 +286,7 @@ const aboutData: About = about.data;
   <Testimonial />
 
   <!-- FAQ -->
-  <Faq />
+  <Faq schema={false} />
 
   <!-- Call to Action -->
   <CallToAction />

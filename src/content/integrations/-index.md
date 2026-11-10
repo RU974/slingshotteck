@@ -1,12 +1,12 @@
 ---
 title: "Integrations"
-meta_title: "Integrations - All-In-One Local Business Software"
-description: "Seamlessly connect our platform with your favorite local business tools."
+meta_title: "HRMS & CRM Integrations | Slingshotteck"
+description: "Connect Slingshotteck HRMS and CRM with Google Workspace, Microsoft 365, Slack, Zoom, Mailchimp, payment gateways and more."
 image: ""
 draft: false
 
 page_header:
-  title: "Seamlessly Connect With <strong>Your Favorite Tools</strong>"
+  title: "Connect Slingshotteck HRMS & CRM with <strong>the tools you already use</strong>"
 
 integrations:
   enable: true

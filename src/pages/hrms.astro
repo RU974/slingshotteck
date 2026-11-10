@@ -1,5 +1,6 @@
 ---
 import DynamicIcon from "@/helpers/DynamicIcon";
+import config from "@/config/config.json";
 import Base from "@/layouts/Base.astro";
 import Badge from "@/layouts/components/Badge.astro";
 import CallToAction from "@/layouts/components/CallToAction.astro";
@@ -12,9 +13,48 @@ import type { Hrms } from "@/types";
 
 const hrms = await getListPage("hrms", "-index");
 const hrmsData: Hrms = hrms.data;
+
+const siteUrl = config.site.base_url.replace(/\/$/, "");
+const productSchema = {
+  "@type": "SoftwareApplication",
+  "@id": `${siteUrl}/hrms#software`,
+  name: "Slingshotteck HRMS",
+  applicationCategory: "BusinessApplication",
+  applicationSubCategory: "Human resource management system (HRMS)",
+  operatingSystem: "Web browser",
+  url: `${siteUrl}/hrms`,
+  description: hrmsData.description,
+  image: `${siteUrl}/images/hrms/hrms-dashboard.png`,
+  publisher: { "@id": `${siteUrl}/#organization` },
+  featureList: [
+    "Employee records and documents",
+    "Biometric attendance, shifts and leave",
+    "Automated payroll and payslips",
+    "Recruitment and onboarding",
+    "Performance reviews",
+    "HR and payroll reports",
+  ],
+  offers: {
+    "@type": "AggregateOffer",
+    priceCurrency: "USD",
+    lowPrice: "10",
+    highPrice: "20",
+    offerCount: 2,
+    url: `${siteUrl}/pricing`,
+    description: "Per employee per month, 14-day free trial",
+  },
+};
+const hrmsFaqs = [
+  { question: "What is an HRMS?", answer: "An HRMS (human resource management system) is software that brings employee records, attendance, leave, payroll, recruitment and performance management into one system, replacing spreadsheets and separate HR tools." },
+  { question: "Does Slingshotteck HRMS work with biometric attendance devices?", answer: "Yes. Slingshotteck HRMS syncs attendance from supported biometric and fingerprint devices, so check-in and check-out times flow automatically into attendance records and payroll." },
+  { question: "Can the HRMS calculate payroll automatically?", answer: "Yes. Payroll runs use attendance, leave, overtime, allowances, bonuses and deductions to generate salaries and payslips without manual calculation." },
+  { question: "How much does Slingshotteck HRMS cost?", answer: "Plans start at $10 per employee per month, with a 14-day free trial and 20% off yearly billing. See the <a href='/pricing'>pricing page</a> for details or contact us for enterprise pricing." },
+  { question: "Is the HRMS cloud-based?", answer: "Yes. Slingshotteck HRMS runs in the browser and is hosted in the cloud, and it can be deployed on your own servers for enterprise customers." },
+  { question: "Can it be customised for our company?", answer: "Yes. As we develop the product ourselves, we can configure policies and workflows and build custom modules or integrations through our <a href='/services/custom-software-development'>software development service</a>." },
+];
 ---
 
-<Base {...hrmsData}>
+<Base {...hrmsData} schema={productSchema}>
   <!-- Banner -->
   <section class="section-ph relative overflow-hidden pb-20">
     <div class="container relative">
@@ -25,6 +65,18 @@ const hrmsData: Hrms = hrms.data;
       </div>
       <div class="row justify-center">
         <div class="mb-20 text-center relative">
+          <div class="product-lockup mb-8">
+            <ImageMod
+              src="/images/slingshot-logo-light.png"
+              alt="Slingshotteck logo"
+              width={184}
+              height={142}
+              class="h-14 w-auto"
+              format="webp"
+            />
+            <span class="product-lockup-divider" aria-hidden="true"></span>
+            <span class="product-lockup-name">HRMS</span>
+          </div>
           <h1
             class="mb-8 lg:col-9 mx-auto text-h3 lg:text-h1 hasHighlight"
             set:html={markdownify(hrmsData.banner.title)}
@@ -125,7 +177,7 @@ const hrmsData: Hrms = hrms.data;
   }
 
   <!-- FAQ -->
-  <Faq />
+  <Faq title="HRMS software: frequently asked questions" items={hrmsFaqs} />
 
   <!-- Call to Action -->
   <CallToAction />

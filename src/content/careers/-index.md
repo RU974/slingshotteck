@@ -1,12 +1,12 @@
 ---
 title: "Careers"
-meta_title: "Careers - Join Our Local Business Growth Team"
-description: "Join us and help empower local businesses with automated tools for their community growth."
+meta_title: "Careers at Slingshotteck | Software & IT Jobs in Lahore"
+description: "Join Slingshotteck in Lahore and work on software products, cloud, networking and cybersecurity projects for clients in the UK, USA and Pakistan."
 image: ""
 draft: false
 
 page_header:
-  title: "Help Us Grow <strong>Local Businesses</strong>"
+  title: "Build software and IT <strong>that businesses rely on</strong>"
 
 gallery:
   enable: true
@@ -27,7 +27,7 @@ gallery:
 what_we_offer:
   enable: true
   title: "What We Offer"
-  subtitle: "Slingshotteck makes it easy for teams to organize enquiries, prioritize follow-up, and solve customer requests quickly in one familiar workflow."
+  subtitle: "At Slingshotteck you will work on real products and infrastructure, HRMS, CRM, custom software, networks and cloud, for clients in the UK, USA and Pakistan."
   offers:
     - logo: "/images/icons/healthicon.svg"
       title: "Health & Wellness"
@@ -55,7 +55,7 @@ what_we_offer:
         - "Career growth opportunities"
 
 staff_testimonials:
-  enable: true
+  enable: false
   title: What Our Staff Say
   items:
     - quote: "They truly understood our business at a depth, offering data-driven updates on time, we designed and managed a project to drive value, including time, and integrate productively. It offers the full gamut"

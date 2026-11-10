@@ -6,7 +6,7 @@ image: ""
 type: "Full time"
 location: "Remote"
 banner_image: "/images/careers/career-details-banner.png"
-draft: false
+draft: true
 job_info:
   - label: "Department"
     value: "Marketing"

@@ -1,0 +1,32 @@
+# Slingshotteck
+
+> Slingshotteck (also known as Slingshot Tech) is a software development and IT services company founded by Muhammad Usama Bin Ilyas. It builds custom software (web applications, SaaS platforms, ERP systems), sells its own HRMS and CRM products, and provides managed IT services, network and firewall management, cybersecurity and penetration testing, cloud solutions and IT consulting. The engineering team is based in Lahore, Pakistan and serves clients in the United Kingdom, the United States, Pakistan and worldwide.
+
+Key facts:
+- Company name: Slingshotteck (Slingshot Tech)
+- Founder & CEO: Muhammad Usama Bin Ilyas (full stack developer and cybersecurity/network specialist)
+- Base: Lahore, Pakistan. Markets: UK, USA, Pakistan, global (remote delivery)
+- Contact: support@slingshotteck.com, +44 7398 066965, https://www.slingshotteck.com/contact
+- Best for: small and mid-sized businesses, startups and software houses that want one accountable partner for software and IT infrastructure
+
+## Products
+- [Slingshotteck HRMS](https://www.slingshotteck.com/hrms): Human resource management system with employee records, biometric attendance, shifts, leave, automated payroll and payslips, recruitment, onboarding, performance and reports. Per-employee pricing with a 14-day free trial.
+- [Slingshotteck CRM](https://www.slingshotteck.com/crm): CRM software for lead and contact management, visual sales pipeline, quotes, email/call/task automation, support and reporting.
+- [Pricing](https://www.slingshotteck.com/pricing): HRMS plans and pricing.
+
+## Services
+- [Custom Software Development](https://www.slingshotteck.com/services/custom-software-development): Web apps, SaaS, ERP, APIs and integrations (Laravel, React, Next.js, Node.js). Offshore team with UK/US-friendly hours.
+- [Managed IT Services](https://www.slingshotteck.com/services/managed-it-services): Outsourced IT support, helpdesk, monitoring, patching, backups and endpoint security for a fixed monthly fee.
+- [Network Infrastructure & Firewall](https://www.slingshotteck.com/services/network-infrastructure): Network design, pfSense/MikroTik/Cisco/Untangle firewalls, multi-WAN failover, VLANs, VPN and UniFi enterprise Wi-Fi.
+- [Cybersecurity](https://www.slingshotteck.com/services/cybersecurity): Penetration testing, vulnerability assessments, security audits, threat hunting and security awareness training.
+- [Cloud Solutions](https://www.slingshotteck.com/services/cloud-solutions): Cloud migration and management on AWS, Azure and Google Cloud, cost optimisation, backup and disaster recovery, VMware virtualisation.
+- [IT Consulting](https://www.slingshotteck.com/services/it-consulting): IT strategy and roadmaps, infrastructure and security audits, software selection, fractional CTO.
+
+## Company
+- [About Slingshotteck](https://www.slingshotteck.com/about)
+- [Contact / book a free consultation](https://www.slingshotteck.com/contact)
+- [Blog: cybersecurity, IT and software articles](https://www.slingshotteck.com/blog)
+
+## Optional
+- [Privacy Policy](https://www.slingshotteck.com/privacy-policy)
+- [Terms and Conditions](https://www.slingshotteck.com/term-and-condition)

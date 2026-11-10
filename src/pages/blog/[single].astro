@@ -1,4 +1,6 @@
 ---
+import config from "@/config/config.json";
+import Faq from "@/layouts/components/Faq.astro";
 import Share from "@/components/Share.astro";
 import Base from "@/layouts/Base.astro";
 import BlogCard from "@/layouts/components/BlogCard.astro";
@@ -22,12 +24,37 @@ const { post } = Astro.props;
 const postData = post.data;
 const { Content } = await render(post);
 
+const siteUrl = config.site.base_url.replace(/\/$/, "");
+const postUrl = `${siteUrl}/blog/${post.id}`;
+const articleSchema: Record<string, any>[] = [
+  {
+    "@type": "BlogPosting",
+    "@id": `${postUrl}#article`,
+    headline: postData.title,
+    description: postData.description,
+    image: `${siteUrl}${postData.image ?? config.metadata.meta_image}`,
+    datePublished: postData.date ? new Date(postData.date).toISOString() : undefined,
+    dateModified: new Date(postData.updated ?? postData.date ?? Date.now()).toISOString(),
+    author: {
+      "@type": "Person",
+      "@id": `${siteUrl}/about#founder`,
+      name: postData.author,
+    },
+    publisher: { "@id": `${siteUrl}/#organization` },
+    mainEntityOfPage: { "@id": `${postUrl}#webpage` },
+    keywords: postData.tags?.join(", "),
+    inLanguage: "en",
+  },
+];
 // Related posts
 const allPosts = await getSinglePage("blog");
-const relatedPosts = allPosts.filter((p) => p.id !== post.id).slice(0, 3);
+const relatedPosts = allPosts
+  .filter((p) => p.id !== post.id)
+  .sort((a, b) => Number(Boolean(a.data.external_url)) - Number(Boolean(b.data.external_url)))
+  .slice(0, 3);
 ---
 
-<Base {...postData}>
+<Base {...postData} type="article" schema={articleSchema} breadcrumbs={[{ name: "Blog", url: "/blog" }, { name: postData.title, url: `/blog/${post.id}` }]}>
   <!-- Blog Single Hero -->
   <section class="section-ph relative pb-10 lg:pb-14">
     <div class="container">
@@ -104,6 +131,10 @@ const relatedPosts = allPosts.filter((p) => p.id !== post.id).slice(0, 3);
             <Content />
           </div>
         </article>
+
+        {postData.faqs && postData.faqs.length > 0 && (
+          <Faq title="Frequently asked questions" description={postData.description ?? ""} items={postData.faqs} />
+        )}
 
         <!-- Share -->
         <div class="flex flex-wrap items-center gap-6 md:gap-8">

@@ -1,14 +1,12 @@
 {
+  "_note": "Fill in real profile URLs. Empty links are hidden from the footer and from Organization schema (sameAs). Consistent profiles help Google and AI assistants recognise Slingshotteck as one entity.",
   "main": [
-    {
-      "name": "instagram",
-      "icon": "FaInstagram",
-      "link": "https://www.instagram.com/"
-    },
-    {
-      "name": "youtube",
-      "icon": "FaYoutube",
-      "link": "https://www.youtube.com/"
-    }
+    { "name": "LinkedIn", "icon": "FaLinkedin", "link": "" },
+    { "name": "Facebook", "icon": "FaFacebook", "link": "" },
+    { "name": "X (Twitter)", "icon": "FaXTwitter", "link": "" },
+    { "name": "Instagram", "icon": "FaInstagram", "link": "" },
+    { "name": "YouTube", "icon": "FaYoutube", "link": "" },
+    { "name": "GitHub", "icon": "FaGithub", "link": "" },
+    { "name": "Clutch", "icon": "FaStar", "link": "" }
   ]
 }

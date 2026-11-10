@@ -5,13 +5,13 @@
   --surface-hover: rgba(255, 255, 255, 0.07);
   --surface-inset: rgba(0, 0, 0, 0.28);
   --surface-border: rgba(255, 255, 255, 0.09);
-  --surface-border-hover: rgba(96, 150, 240, 0.45);
+  --surface-border-hover: rgba(120, 155, 250, 0.45);
   --surface-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.07);
   --surface-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.55);
-  --surface-glow: 0 0 0 1px rgba(96, 150, 240, 0.18),
-    0 16px 40px -14px rgba(47, 111, 224, 0.45);
-  --accent-glow: rgba(34, 211, 238, 0.35);
-  --focus-ring: 0 0 0 3px rgba(47, 111, 224, 0.35);
+  --surface-glow: 0 0 0 1px rgba(120, 155, 250, 0.18),
+    0 16px 40px -14px rgba(59, 111, 245, 0.45);
+  --accent-glow: rgba(245, 165, 36, 0.35);
+  --focus-ring: 0 0 0 3px rgba(59, 111, 245, 0.35);
 }
 
 /* Cards / panels: any rounded element using the light or translucent surface */
@@ -59,8 +59,8 @@
 .accordion-icon,
 .tab-nav,
 .modal-close {
-  background: rgba(47, 111, 224, 0.12);
-  border: 1px solid rgba(96, 150, 240, 0.22);
+  background: rgba(59, 111, 245, 0.12);
+  border: 1px solid rgba(120, 155, 250, 0.22);
   box-shadow: none;
 }
 
@@ -71,16 +71,16 @@
 
 /* Buttons */
 .btn-primary {
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 220, 160, 0.45);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.25),
-    0 8px 20px -8px rgba(47, 111, 224, 0.6);
+    inset 0 1px 0 rgba(255, 255, 255, 0.35),
+    0 8px 22px -8px rgba(245, 165, 36, 0.55);
 }
 .btn-primary:hover {
   transform: translateY(-1px);
   box-shadow:
-    inset 0 1px 0 rgba(255, 255, 255, 0.3),
-    0 12px 28px -8px var(--accent-glow), 0 12px 28px -8px rgba(47, 111, 224, 0.6);
+    inset 0 1px 0 rgba(255, 255, 255, 0.4),
+    0 14px 32px -8px var(--accent-glow);
 }
 .btn-primary:active {
   transform: translateY(0);
@@ -99,7 +99,7 @@
   border-color: var(--surface-border-hover);
   color: #fff;
   transform: translateY(-1px);
-  box-shadow: var(--surface-highlight), 0 8px 24px -10px rgba(47, 111, 224, 0.6);
+  box-shadow: var(--surface-highlight), 0 8px 24px -10px rgba(59, 111, 245, 0.6);
 }
 
 /* Social icons */
@@ -108,7 +108,7 @@
   border: 1px solid var(--surface-border);
 }
 .social-icons li a:hover {
-  background: rgba(47, 111, 224, 0.18);
+  background: rgba(59, 111, 245, 0.18);
   border-color: var(--surface-border-hover);
   color: #fff;
 }
@@ -185,12 +185,12 @@ select:focus {
 .pricing-card-featured:hover {
   background:
     linear-gradient(var(--color-body), var(--color-body)) padding-box,
-    linear-gradient(150deg, #7db0ff, rgba(255, 255, 255, 0.08) 45%, #22d3ee)
+    linear-gradient(150deg, #7db0ff, rgba(255, 255, 255, 0.08) 45%, #f5a524)
       border-box;
   border: 1px solid transparent;
   box-shadow:
-    0 30px 80px -30px rgba(47, 111, 224, 0.6),
-    0 0 60px -20px rgba(34, 211, 238, 0.35);
+    0 30px 80px -30px rgba(59, 111, 245, 0.6),
+    0 0 60px -20px rgba(245, 165, 36, 0.35);
 }
 @media (min-width: 1280px) {
   .pricing-card-featured {
@@ -201,13 +201,13 @@ select:focus {
   }
 }
 .pricing-badge {
-  color: #04121a;
-  background: linear-gradient(135deg, #7db0ff, #22d3ee);
+  color: #1a1203;
+  background: linear-gradient(135deg, #ffd08a, #f5a524);
 }
 
 /* Consistent avatar / image treatment */
 .avatar-ring {
-  border: 2px solid rgba(96, 150, 240, 0.5);
-  box-shadow: 0 0 0 4px rgba(47, 111, 224, 0.15);
+  border: 2px solid rgba(120, 155, 250, 0.5);
+  box-shadow: 0 0 0 4px rgba(59, 111, 245, 0.15);
   object-fit: cover;
 }

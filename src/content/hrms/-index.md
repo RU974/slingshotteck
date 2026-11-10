@@ -1,12 +1,12 @@
 ---
 title: "HRMS"
-meta_title: "Slingshotteck HRMS - Human Resource Management System"
-description: "Run the whole employee lifecycle from one platform, from hiring and onboarding to attendance, payroll, and performance."
+meta_title: "HRMS, Payroll & Attendance Software | Slingshotteck"
+description: "Slingshotteck HRMS: employee records, biometric attendance, leave, automated payroll, recruitment and performance in one HR system."
 image: ""
 draft: false
 
 banner:
-  title: "The Complete HR Platform to <br /> Run Your <strong>Entire Workforce</strong>"
+  title: "HRMS and payroll software to <br /> run your <strong>entire workforce</strong>"
   content: "Slingshotteck HRMS brings employee records, attendance, payroll, recruitment, and performance into one connected system, so your HR team stops juggling spreadsheets and vendors."
   button_primary:
     enable: true

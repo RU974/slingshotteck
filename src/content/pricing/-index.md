@@ -1,7 +1,7 @@
 ---
 title: "Pricing"
-meta_title: "Pricing - Slingshotteck HRMS Plans"
-description: "Simple, transparent pricing for every stage of your company's growth."
+meta_title: "HRMS Pricing: Per-Employee Plans | Slingshotteck"
+description: "Simple per-employee HRMS pricing with a 14-day free trial and 20% off yearly billing. CRM and IT services quoted to your needs."
 image: ""
 draft: false
 

@@ -1,13 +1,13 @@
 {
   "site": {
     "title": "Slingshotteck",
-    "base_url": "https://www.slingshotgrowth.com",
+    "base_url": "https://www.slingshotteck.com",
     "base_path": "/",
     "trailing_slash": false,
     "favicon": "/images/favicon.png",
-    "logo": "/images/slingshot-logo.png",
-    "logo_width": "73",
-    "logo_height": "56",
+    "logo": "/images/slingshot-logo-light.png",
+    "logo_width": "92",
+    "logo_height": "71",
     "logo_text": "Slingshotteck"
   },
   "settings": {
@@ -17,14 +17,14 @@
     "contact_form_action": "#",
     "checklist_form_action": "#",
     "apply_form_action": "#",
-    "copyright": "Copyright &copy; 2025-2026 <strong>slingshotteck</strong>. All rights reserved.",
-    "footer_tagline": "Growth systems for ambitious local businesses.",
+    "copyright": "Copyright &copy; 2025-2026 <strong>Slingshotteck</strong> (Slingshot Tech). All rights reserved.",
+    "footer_tagline": "Software development, HRMS & CRM products, and managed IT, cloud and cybersecurity services for growing businesses in the UK, USA, Pakistan and worldwide.",
     "footer_email": "support@slingshotteck.com",
     "footer_phone": "+44 7398066965"
   },
   "navigation_button": {
     "enable": true,
-    "label": "Book a Strategy Call",
+    "label": "Get a Free Consultation",
     "link": "/contact"
   },
   "whatsapp": {
@@ -37,8 +37,33 @@
     "gtm_id": "GTM-XXXXXX"
   },
   "metadata": {
-    "meta_author": "Slingshot Growth",
+    "meta_author": "Slingshotteck",
     "meta_image": "/images/og-image.png",
-    "meta_description": "Growth systems for ambitious local businesses: lead generation, CRM and automation that turn enquiries into booked jobs."
+    "meta_description": "Software development and managed IT services company: custom software, SaaS, ERP, HRMS & CRM, plus network security, cloud and IT support."
+  },
+  "organization": {
+    "legal_name": "Slingshotteck",
+    "alternate_names": [
+      "Slingshot Tech",
+      "Slingshot Technologies"
+    ],
+    "founder": "Muhammad Usama Bin Ilyas",
+    "founder_title": "Founder & CEO",
+    "founder_linkedin": "https://www.linkedin.com/in/REPLACE-WITH-YOUR-LINKEDIN/",
+    "founding_date": "2025",
+    "area_served": [
+      "United Kingdom",
+      "United States",
+      "Pakistan",
+      "Worldwide"
+    ],
+    "address": {
+      "locality": "Lahore",
+      "region": "Punjab",
+      "country": "PK",
+      "street": "",
+      "postal_code": ""
+    },
+    "same_as": []
   }
 }

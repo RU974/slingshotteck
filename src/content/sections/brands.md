@@ -1,5 +1,5 @@
 ---
-enable: true
+enable: false
 title: Trusted by <strong class="text-primary">500+</strong> businesses for software, cloud, and managed IT services.
 images:
   - src: "/images/brands/dropbox-logo-svg-150px.svg"

@@ -2,6 +2,7 @@
 import config from "@/config/config.json";
 import theme from "@/config/theme.json";
 import { plainify } from "@/lib/utils/textConverter";
+import social from "@/config/social.json";
 import WhatsAppButton from "@/components/WhatsAppButton.astro";
 import Footer from "@/partials/Footer.astro";
 import Header from "@/partials/Header.astro";
@@ -23,55 +24,214 @@ export interface Props {
   image?: string;
   noindex?: boolean;
   canonical?: string;
+  type?: "website" | "article";
+  date?: Date | string;
+  updated?: Date | string;
+  author?: string;
+  schema?: Record<string, any> | Record<string, any>[];
+  breadcrumbs?: { name: string; url: string }[];
+  [key: string]: any;
 }
 
-const { title, meta_title, description, image, noindex, canonical } =
-  Astro.props;
+const {
+  title,
+  meta_title,
+  description,
+  image,
+  noindex,
+  canonical,
+  type = "website",
+  date,
+  updated,
+  author,
+  schema,
+  breadcrumbs,
+} = Astro.props;
 
 const siteUrl = config.site.base_url.replace(/\/$/, "");
-const canonicalUrl =
-  canonical ?? `${siteUrl}${Astro.url.pathname.replace(/\/$/, "")}`;
-const pageTitle = plainify(
-  meta_title ? meta_title : title ? title : config.site.title,
-);
-const orgSchema = {
-  "@context": "https://schema.org",
+const brand = config.site.title;
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+const canonicalUrl = canonical ?? `${siteUrl}${path === "/" ? "/" : path}`;
+const rawTitle = plainify(meta_title ? meta_title : title ? title : brand).trim();
+// Append brand once, keep titles readable in SERPs.
+const pageTitle =
+  path === "/" || rawTitle.toLowerCase().includes(brand.toLowerCase())
+    ? rawTitle
+    : `${rawTitle} | ${brand}`;
+const pageDescription = plainify(
+  description ? description : config.metadata.meta_description,
+).trim();
+const imagePath = image ? image : config.metadata.meta_image;
+const ogImage = imagePath.startsWith("http") ? imagePath : `${siteUrl}${imagePath}`;
+const org = (config as any).organization ?? {};
+const sameAs = (social.main as { link: string }[])
+  .map((s) => s.link)
+  .filter((l) => l && l.trim() !== "")
+  .concat(org.same_as ?? []);
+
+const orgId = `${siteUrl}/#organization`;
+const organization: Record<string, any> = {
   "@type": "Organization",
-  name: config.site.title,
-  url: siteUrl,
-  logo: `${siteUrl}${config.site.logo}`,
+  "@id": orgId,
+  name: brand,
+  legalName: org.legal_name ?? brand,
+  alternateName: org.alternate_names ?? [],
+  url: `${siteUrl}/`,
+  logo: {
+    "@type": "ImageObject",
+    url: `${siteUrl}/images/slingshot-logo.png`,
+  },
+  image: `${siteUrl}${config.metadata.meta_image}`,
+  description: config.metadata.meta_description,
   email: config.params.footer_email,
   telephone: config.params.footer_phone,
+  foundingDate: org.founding_date,
+  founder: org.founder
+    ? {
+        "@type": "Person",
+        "@id": `${siteUrl}/about#founder`,
+        name: org.founder,
+        jobTitle: org.founder_title,
+        ...(org.founder_linkedin && !org.founder_linkedin.includes("REPLACE")
+          ? { sameAs: [org.founder_linkedin] }
+          : {}),
+      }
+    : undefined,
+  address: org.address
+    ? {
+        "@type": "PostalAddress",
+        ...(org.address.street ? { streetAddress: org.address.street } : {}),
+        addressLocality: org.address.locality,
+        addressRegion: org.address.region,
+        ...(org.address.postal_code ? { postalCode: org.address.postal_code } : {}),
+        addressCountry: org.address.country,
+      }
+    : undefined,
+  areaServed: (org.area_served ?? []).map((a: string) =>
+    a === "Worldwide" ? { "@type": "Place", name: "Worldwide" } : { "@type": "Country", name: a },
+  ),
+  contactPoint: [
+    {
+      "@type": "ContactPoint",
+      contactType: "sales",
+      email: config.params.footer_email,
+      telephone: config.params.footer_phone,
+      availableLanguage: ["English", "Urdu"],
+      areaServed: ["GB", "US", "PK"],
+    },
+  ],
+  knowsAbout: [
+    "Custom software development",
+    "SaaS development",
+    "ERP development",
+    "HRMS software",
+    "CRM software",
+    "Managed IT services",
+    "Network security",
+    "Firewall configuration",
+    "Penetration testing",
+    "Cloud migration",
+    "AWS",
+    "Microsoft Azure",
+    "IT consulting",
+  ],
+  ...(sameAs.length ? { sameAs } : {}),
 };
+
+const website = {
+  "@type": "WebSite",
+  "@id": `${siteUrl}/#website`,
+  url: `${siteUrl}/`,
+  name: brand,
+  alternateName: org.alternate_names ?? [],
+  publisher: { "@id": orgId },
+  inLanguage: "en",
+};
+
+const webpage: Record<string, any> = {
+  "@type": type === "article" ? "WebPage" : "WebPage",
+  "@id": `${canonicalUrl}#webpage`,
+  url: canonicalUrl,
+  name: pageTitle,
+  description: pageDescription,
+  isPartOf: { "@id": `${siteUrl}/#website` },
+  about: { "@id": orgId },
+  primaryImageOfPage: { "@type": "ImageObject", url: ogImage },
+  inLanguage: "en",
+};
+
+// Breadcrumbs: explicit list, or derived from the URL path.
+let crumbs = breadcrumbs;
+if (!crumbs && path !== "/") {
+  const parts = path.split("/").filter(Boolean);
+  crumbs = parts.map((part, i) => ({
+    name:
+      i === parts.length - 1
+        ? plainify(title ?? part)
+        : part.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase()),
+    url: `/${parts.slice(0, i + 1).join("/")}`,
+  }));
+}
+const breadcrumbSchema =
+  crumbs && crumbs.length
+    ? {
+        "@type": "BreadcrumbList",
+        "@id": `${canonicalUrl}#breadcrumb`,
+        itemListElement: [{ name: "Home", url: "/" }, ...crumbs].map((c, i) => ({
+          "@type": "ListItem",
+          position: i + 1,
+          name: c.name,
+          item: `${siteUrl}${c.url === "/" ? "/" : c.url}`,
+        })),
+      }
+    : null;
+if (breadcrumbSchema) webpage.breadcrumb = { "@id": breadcrumbSchema["@id"] };
+
+const extra = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [organization, website, webpage, breadcrumbSchema, ...extra].filter(Boolean),
+};
+const toIso = (d?: Date | string) => (d ? new Date(d).toISOString() : undefined);
 ---
 
 <!doctype html>
 <html lang="en">
   <head>
+    <meta charset="UTF-8" />
     <!-- google tag manager -->
     {
       config.google_tag_manager.enable && (
         <GoogleTagmanager id={config.google_tag_manager.gtm_id} />
       )
     }
-    <link rel="shortcut icon" href={config.site.favicon} />
-    <meta name="theme-name" content="slingshot-growth" />
-    <meta name="msapplication-TileColor" content="#000000" />
     <meta
-      name="theme-color"
-      media="(prefers-color-scheme: light)"
-      content="#fff"
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=5"
     />
-    <meta
-      name="theme-color"
-      media="(prefers-color-scheme: dark)"
-      content="#000"
-    />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <link rel="canonical" href={canonicalUrl} />
+    {
+      noindex ? (
+        <meta name="robots" content="noindex,follow" />
+      ) : (
+        <meta
+          name="robots"
+          content="index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1"
+        />
+      )
+    }
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" href={config.site.favicon} />
+    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
+    <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
+    <link rel="alternate" type="text/plain" title="LLM summary" href="/llms.txt" />
+    <meta name="author" content={author ?? config.metadata.meta_author} />
+    <meta name="theme-color" content="#000000" />
     <meta name="generator" content={Astro.generator} />
     <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
     <link rel="preconnect" href="https://unpkg.com" crossorigin />
-    <script type="application/ld+json" set:html={JSON.stringify(orgSchema)} />
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
     {
       fontEntries.map(([key]) => {
@@ -80,70 +240,28 @@ const orgSchema = {
       })
     }
 
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=5"
-    />
-
-    <title>
-      {plainify(meta_title ? meta_title : title ? title : config.site.title)}
-    </title>
-
-    <link rel="canonical" href={canonicalUrl} />
-    {noindex && <meta name="robots" content="noindex,nofollow" />}
-    <meta
-      name="description"
-      content={plainify(
-        description ? description : config.metadata.meta_description,
-      )}
-    />
-
-    <!-- View Transitions removed to avoid conflicts with GSAP/Lenis/Swiper -->
-
-    <meta name="author" content={config.metadata.meta_author} />
-    <meta
-      property="og:title"
-      content={plainify(
-        meta_title ? meta_title : title ? title : config.site.title,
-      )}
-    />
-    <meta
-      property="og:description"
-      content={plainify(
-        description ? description : config.metadata.meta_description,
-      )}
-    />
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content={config.site.title} />
-    <meta
-      property="og:url"
-      content={canonicalUrl}
-    />
-    <meta
-      name="twitter:title"
-      content={plainify(
-        meta_title ? meta_title : title ? title : config.site.title,
-      )}
-    />
-    <meta
-      name="twitter:description"
-      content={plainify(
-        description ? description : config.metadata.meta_description,
-      )}
-    />
-    <meta
-      property="og:image"
-      content={`${config.site.base_url}${
-        image ? image : config.metadata.meta_image
-      }`}
-    />
-    <meta
-      name="twitter:image"
-      content={`${config.site.base_url}${
-        image ? image : config.metadata.meta_image
-      }`}
-    />
+    <!-- Open Graph / social -->
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content={brand} />
+    <meta property="og:locale" content="en_GB" />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:alt" content={pageTitle} />
+    {type === "article" && toIso(date) && (
+      <meta property="article:published_time" content={toIso(date)} />
+    )}
+    {type === "article" && toIso(updated ?? date) && (
+      <meta property="article:modified_time" content={toIso(updated ?? date)} />
+    )}
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDescription} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Structured data (Organization, WebSite, WebPage, Breadcrumbs + page schema) -->
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 
     <!-- GSAP CDN -->
     <script
@@ -178,6 +296,7 @@ const orgSchema = {
 
     {/* <TwSizeIndicator /> */}
     <Header />
+    <a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:bg-white focus:text-black focus:px-4 focus:py-2 focus:rounded">Skip to content</a>
     <main id="main-content" class="overflow-x-hidden md:overflow-x-auto">
       <slot />
     </main>

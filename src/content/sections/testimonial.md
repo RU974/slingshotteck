@@ -1,5 +1,5 @@
 ---
-enable: true
+enable: false
 title: "What Our <strong>Clients</strong> Say"
 
 # Testimonials

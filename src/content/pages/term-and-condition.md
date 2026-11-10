@@ -1,7 +1,7 @@
 ---
 title: "Terms and Conditions"
 meta_title: "Terms and Conditions | Slingshotteck"
-description: "The terms that apply to your use of the Slingshotteck website and to the growth services we provide to local service businesses."
+description: "The terms that apply to your use of the Slingshotteck website and to the software products and IT services we provide."
 image: ""
 draft: false
 ---
@@ -12,7 +12,7 @@ These Terms and Conditions ("Terms") govern your use of the website at [www.slin
 
 #### 1. About Us
 
-Slingshotteck provides growth systems, including marketing, lead generation, automation and related consulting, for local service businesses.
+Slingshotteck provides software products (HRMS and CRM), custom software development and IT services, including managed IT, networking, cybersecurity, cloud and IT consulting.
 
 - **Email:** support@slingshotteck.com
 - **Phone / WhatsApp:** +44 7398066965

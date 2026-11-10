@@ -25,7 +25,7 @@ const { main: socialLinks } = social as SocialType;
       <div class="max-w-95 mb-20 text-lg text-text">
         <a href="/" class="inline-block">
           <ImageMod
-            src="/images/slingshot-logo.png"
+            src="/images/slingshot-logo-light.png"
             width={170}
             height={130}
             class="h-16 w-auto"
@@ -38,9 +38,14 @@ const { main: socialLinks } = social as SocialType;
           href={`mailto:${config.params.footer_email}`}
           >{config.params.footer_email}</a
         >
-        <a class="link mt-4 block" href={`tel:${config.params.footer_phone}`}
+        <a
+          class="link mt-4 block"
+          href={`tel:${config.params.footer_phone.replace(/\s/g, "")}`}
           >{config.params.footer_phone}</a
         >
+        <address class="not-italic mt-4 text-base">
+          Lahore, Pakistan &middot; Serving the UK, USA &amp; worldwide
+        </address>
       </div>
       <!-- Column 2 - Primary -->
       <div>

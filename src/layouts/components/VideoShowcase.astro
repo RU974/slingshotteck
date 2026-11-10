@@ -16,19 +16,22 @@
     autoplay
     muted
     loop
-    width="1000px"
+    width="1280"
+    height="720"
     playsinline
     preload="metadata"
+    poster="/images/showcase-poster.jpg"
+    aria-label="Slingshotteck HRMS product demo: attendance, employees and payroll screens"
   >
     <source src="/showcase.mp4" type="video/mp4" />
-    Your browser does not support the video tag.
+    Your browser does not support HTML video. <a href="/hrms">See Slingshotteck HRMS screenshots</a>.
   </video>
 
   <!-- Sound toggle overlay — visible = muted (shows icon to unmute) -->
   <button
     id="soundToggle"
     class="absolute inset-0 grid place-items-center shadow-lg group bg-dark/40 cursor-pointer transition-opacity duration-300"
-    aria-label="Unmute video"
+    aria-label="Show product demo video"
   >
     <div
       id="mutedIcon"

@@ -8,7 +8,6 @@ export type BlogIndex = CollectionEntry<"blogIndex">["data"];
 export type About = CollectionEntry<"about">["data"];
 export type Contact = CollectionEntry<"contact">["data"];
 export type Homepage = CollectionEntry<"homepage">["data"];
-export type Features = CollectionEntry<"features">["data"];
 export type Crm = CollectionEntry<"crm">["data"];
 export type Hrms = CollectionEntry<"hrms">["data"];
 export type Pricing = CollectionEntry<"pricing">["data"];

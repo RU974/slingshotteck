@@ -22,6 +22,10 @@ const blogCollection = defineCollection({
     tag: z.string().optional(),
     read_time: z.string().optional(),
     external_url: z.string().optional(),
+    updated: z.coerce.date().optional(),
+    faqs: z
+      .array(z.object({ question: z.string(), answer: z.string() }))
+      .optional(),
   }),
 });
 
@@ -145,6 +149,7 @@ const homepageCollection = defineCollection({
           z.object({
             logo: z.string(),
             title: z.string(),
+            link: z.string().optional(),
             description: z.string(),
             list: z.array(z.string()),
           }),
@@ -250,65 +255,6 @@ const homepageCollection = defineCollection({
       enable: z.boolean(),
       title: z.string(),
       content: z.string(),
-    }),
-  }),
-});
-
-const featuresCollection = defineCollection({
-  loader: glob({ pattern: "**/-*.{md,mdx}", base: "src/content/features" }),
-  schema: z.object({
-    ...commonFields,
-    banner: z.object({
-      title: z.string(),
-      content: z.string(),
-      button_primary: z.object({
-        enable: z.boolean(),
-        label: z.string(),
-        link: z.string(),
-      }),
-      button_secondary: z.object({
-        enable: z.boolean(),
-        label: z.string(),
-        link: z.string(),
-      }),
-      image: z.string(),
-    }),
-    partners: z.object({
-      enable: z.boolean(),
-      badge: z.string().optional(),
-      title: z.string(),
-    }),
-    smart_platform: z.object({
-      enable: z.boolean(),
-      badge: z.string().optional(),
-      title: z.string(),
-      content: z.string().optional(),
-      cards: z.array(
-        z.object({
-          title: z.string(),
-          subtitle: z.string().optional(),
-          logo: z.string().optional(),
-          image: z.string().optional(),
-          classNames: z.string().optional(),
-        }),
-      ),
-    }),
-    service_features: z.object({
-      enable: z.boolean(),
-      items: z.array(
-        z.object({
-          title: z.string(),
-          image: z.string(),
-          items: z.array(
-            z.object({
-              icon: z.string(),
-              title: z.string(),
-              content: z.string(),
-            }),
-          ),
-          reverse: z.boolean(),
-        }),
-      ),
     }),
   }),
 });
@@ -738,14 +684,35 @@ const businessNeedsSectionCollection = defineCollection({
   }),
 });
 
+const servicesCollection = defineCollection({
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "src/content/services" }),
+  schema: z.object({
+    ...commonFields,
+    h1: z.string(),
+    intro: z.string(),
+    service_type: z.string(),
+    icon: z.string().default("FaGears"),
+    order: z.number().default(99),
+    short: z.string(),
+    highlights: z.array(z.string()).default(() => []),
+    deliverables: z
+      .array(z.object({ title: z.string(), content: z.string() }))
+      .default(() => []),
+    faqs: z
+      .array(z.object({ question: z.string(), answer: z.string() }))
+      .default(() => []),
+    related: z.array(z.string()).default(() => []),
+  }),
+});
+
 export const collections = {
+  services: servicesCollection,
   blog: blogCollection,
   blogIndex: blogIndexCollection,
   pages: pagesCollection,
   about: aboutCollection,
   contact: contactCollection,
   homepage: homepageCollection,
-  features: featuresCollection,
   crm: crmCollection,
   hrms: hrmsCollection,
   pricing: pricingCollection,

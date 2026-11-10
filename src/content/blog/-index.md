@@ -1,13 +1,13 @@
 ---
 title: "Blog"
-meta_title: "Blog - Cybersecurity Articles"
-description: "Articles on cybersecurity, threat hunting, penetration testing and cloud infrastructure by Muhammad Usama Bin Ilyas."
+meta_title: "Cybersecurity, IT & Software Blog | Slingshotteck"
+description: "Articles on cybersecurity, threat hunting, penetration testing, networking, cloud infrastructure and business software by Slingshotteck."
 image: ""
 draft: false
 
 page_header:
-  title: "Cybersecurity <strong>Insights &amp; Articles</strong>"
-  featured_post: "linkedin-1"
+  title: "Cybersecurity, IT &amp; <strong>software insights</strong>"
+  featured_post: "hrms-software-features-checklist"
 
 featured_post:
   enable: true

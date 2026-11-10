@@ -93,7 +93,7 @@ const money = (v: string) => (/^\d/.test(v) ? `$${v}` : v);
   </div>
 
   {limits && <p class="text-sm text-text-dark">{limits}</p>}
-  {trial && <p class="text-sm text-primary-light mt-2">{trial}</p>}
+  {trial && <p class="text-sm text-accent font-medium mt-2">{trial}</p>}
 
   {
     button.enable && (is_custom ? (

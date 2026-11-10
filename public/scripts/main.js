@@ -193,12 +193,12 @@
             mutedIcon.classList.remove("hidden");
             toggleBtn.classList.add("bg-dark/40");
             toggleBtn.style.opacity = "1";
-            toggleBtn.setAttribute("aria-label", "Unmute video");
+            toggleBtn.setAttribute("aria-label", "Show product demo video");
           } else {
             mutedIcon.classList.add("hidden");
             toggleBtn.classList.remove("bg-dark/40");
             toggleBtn.style.opacity = "0";
-            toggleBtn.setAttribute("aria-label", "Mute video");
+            toggleBtn.setAttribute("aria-label", "Show video overlay");
           }
         });
       }
