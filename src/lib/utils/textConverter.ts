@@ -6,9 +6,9 @@ export const slugify = (content: string) => {
   return slug(content);
 };
 
-// markdownify
-export const markdownify = (content: string, div?: boolean) => {
-  return div ? marked.parse(content) : marked.parseInline(content);
+// markdownify: Markdown -> HTML (inline by default, block when `div` is true)
+export const markdownify = (content: string, div?: boolean): string => {
+  return (div ? marked.parse(content ?? "") : marked.parseInline(content ?? "")) as string;
 };
 
 // humanize
@@ -31,9 +31,9 @@ export const titleify = (content: string) => {
     .join(" ");
 };
 
-// plainify
+// plainify: Markdown/HTML -> plain text
 export const plainify = (content: string) => {
-  const parseMarkdown: any = marked.parse(content);
+  const parseMarkdown = marked.parse(content ?? "") as string;
   const filterBrackets = parseMarkdown.replace(/<\/?[^>]+(>|$)/gm, "");
   const filterSpaces = filterBrackets.replace(/[\r\n]\s*[\r\n]/gm, "");
   const stripHTML = htmlEntityDecoder(filterSpaces);
@@ -42,7 +42,7 @@ export const plainify = (content: string) => {
 
 // strip entities for plainify
 const htmlEntityDecoder = (htmlWithEntities: string) => {
-  let entityList: { [key: string]: string } = {
+  const entityList: { [key: string]: string } = {
     "&nbsp;": " ",
     "&lt;": "<",
     "&gt;": ">",
@@ -50,11 +50,8 @@ const htmlEntityDecoder = (htmlWithEntities: string) => {
     "&quot;": '"',
     "&#39;": "'",
   };
-  let htmlWithoutEntities: string = htmlWithEntities.replace(
+  return htmlWithEntities.replace(
     /(&amp;|&lt;|&gt;|&quot;|&#39;)/g,
-    (entity: string): string => {
-      return entityList[entity];
-    },
+    (entity: string): string => entityList[entity],
   );
-  return htmlWithoutEntities;
 };

@@ -1,31 +1,3 @@
-import type { CollectionEntry } from "astro:content";
-
-// ─── Content Collection Data Types ───────────────────────────────────────────
-// Derived directly from the Zod schemas in content.config.ts — always in sync.
-
-export type Blog = CollectionEntry<"blog">["data"];
-export type BlogIndex = CollectionEntry<"blogIndex">["data"];
-export type About = CollectionEntry<"about">["data"];
-export type Contact = CollectionEntry<"contact">["data"];
-export type Homepage = CollectionEntry<"homepage">["data"];
-export type Crm = CollectionEntry<"crm">["data"];
-export type Hrms = CollectionEntry<"hrms">["data"];
-export type Pricing = CollectionEntry<"pricing">["data"];
-export type Careers = CollectionEntry<"careers">["data"];
-export type Integrations = CollectionEntry<"integrations">["data"];
-
-// ─── Section Data Types ───────────────────────────────────────────────────────
-
-export type CtaSection = CollectionEntry<"ctaSection">["data"];
-export type FaqSection = CollectionEntry<"faqSection">["data"];
-export type BrandsSection = CollectionEntry<"brandsSection">["data"];
-export type OurStorySection = CollectionEntry<"ourStorySection">["data"];
-export type TestimonialSection = CollectionEntry<"testimonialSection">["data"];
-export type ComparisonRowSection =
-  CollectionEntry<"comparisonRowSection">["data"];
-export type BusinessNeedsSection =
-  CollectionEntry<"businessNeedsSection">["data"];
-
 // ─── Config File Types ────────────────────────────────────────────────────────
 
 export interface NavLink {
@@ -33,8 +5,13 @@ export interface NavLink {
   url: string;
 }
 
+export interface NavigationLink extends NavLink {
+  hasChildren?: boolean;
+  children?: NavLink[];
+}
+
 export interface Menu {
-  main: NavLink[];
+  main: NavigationLink[];
   footer_col_1_title: string;
   footer_col_2_title: string;
   footer_col_3_title: string;
@@ -49,11 +26,55 @@ export interface SocialLink {
   link: string;
 }
 
-export interface SocialType {
-  main: SocialLink[];
+// ─── Content Types ──────────────────────────────────────────────────────────
+// Front matter is validated by convention, not at runtime. Fields used by the
+// templates are typed loosely so editors can add new keys freely.
+
+export interface Faq {
+  question: string;
+  answer: string;
 }
 
-// ─── Shared Component Prop Types ─────────────────────────────────────────────
+export interface Button {
+  enable: boolean;
+  label: string;
+  link: string;
+}
+
+export interface BlogPost {
+  title: string;
+  meta_title?: string;
+  description?: string;
+  date?: string;
+  updated?: string;
+  image?: string;
+  draft?: boolean;
+  author: string;
+  author_image?: string;
+  categories: string[];
+  tags: string[];
+  tag?: string;
+  read_time?: string;
+  external_url?: string;
+  faqs?: Faq[];
+}
+
+export interface Service {
+  title: string;
+  meta_title?: string;
+  description?: string;
+  image?: string;
+  h1: string;
+  intro: string;
+  service_type: string;
+  icon: string;
+  order: number;
+  short: string;
+  highlights: string[];
+  deliverables: { title: string; content: string }[];
+  faqs: Faq[];
+  related: string[];
+}
 
 export interface FeatureItem {
   logo: string;
@@ -64,9 +85,22 @@ export interface FeatureItem {
 export interface OurFeaturesSection {
   badge?: string;
   title: string;
-  /** Used by homepage collection */
   content?: string;
-  /** Used by about collection (core_values) */
   subtitle?: string;
   items: FeatureItem[];
+}
+
+export interface SeoProps {
+  title?: string;
+  meta_title?: string;
+  description?: string;
+  image?: string;
+  noindex?: boolean;
+  canonical?: string;
+  type?: "website" | "article";
+  date?: Date | string;
+  updated?: Date | string;
+  author?: string;
+  schema?: Record<string, any> | Record<string, any>[];
+  breadcrumbs?: { name: string; url: string }[];
 }

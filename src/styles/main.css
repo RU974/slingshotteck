@@ -10,6 +10,8 @@
 @import "./utilities.css";
 /* Unlayered so it wins over utilities */
 @import "./surfaces.css";
+/* Component styles that used to be scoped <style> blocks in .astro files */
+@import "./business-needs.css";
 
 @layer base {
   @import "./base.css";

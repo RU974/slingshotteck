@@ -22,9 +22,9 @@ contact_info:
       detail: "+44 7398066965"
       link: "tel:+447398066965"
       icon: "FaPhone"
-    - type: "calendar"
+    - type: "whatsapp"
       title: "Book a Discovery Call"
-      detail: "Schedule a free 30-minute consultation"
-      link: "/contact"
-      icon: "FaCalendarCheck"
+      detail: "Message us on WhatsApp to book a free 30-minute consultation"
+      link: "https://wa.me/447398066965?text=Hi%2C%20I'd%20like%20to%20book%20a%20free%2030-minute%20discovery%20call."
+      icon: "FaWhatsapp"
 ---

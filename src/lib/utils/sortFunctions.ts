@@ -1,5 +1,5 @@
 // sort by date
-export const sortByDate = <T extends { data: { date?: Date } }>(
+export const sortByDate = <T extends { data: { date?: Date | string } }>(
   array: T[],
 ): T[] => {
   return array.sort(

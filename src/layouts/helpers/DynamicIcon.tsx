@@ -1,4 +1,4 @@
-import React, { type FC } from "react";
+import type { FC, SVGProps } from "react";
 import type { IconType } from "react-icons";
 import * as FaIcons from "react-icons/fa6";
 // import * as AiIcons from "react-icons/ai";
@@ -11,7 +11,7 @@ import * as FaIcons from "react-icons/fa6";
 
 type IconMap = Record<string, IconType>;
 
-interface IDynamicIcon extends React.SVGProps<SVGSVGElement> {
+interface IDynamicIcon extends SVGProps<SVGSVGElement> {
   icon: string;
   className?: string;
 }
