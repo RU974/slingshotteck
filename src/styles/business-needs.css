@@ -14,7 +14,14 @@
   }
 }
 
-/* Scroll reveal (activated by entry-client.tsx; visible by default without JS) */
+/* Staircase indent on wide screens */
+@media (min-width: 1281px) {
+  .bn-card {
+    margin-inline: var(--indent);
+  }
+}
+
+/* Scroll reveal (BusinessNeeds.tsx; visible by default without JS) */
 .js .bn-card {
   opacity: 0;
   transform: translateY(40px) scale(0.96);

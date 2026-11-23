@@ -1,7 +1,9 @@
 import { HeroGlow, SporeCanvas } from "@/components/Glows";
 import Base from "@/layouts/Base";
+import { usePage } from "@/lib/page";
 
 export default function NotFound() {
+  usePage().status = 404; // tells the pre-renderer / dev server to answer 404
   return (
     <Base title="Page Not Found" noindex>
       <section className="section-ph text-center relative overflow-hidden">

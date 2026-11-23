@@ -2,7 +2,7 @@ import CallToAction from "@/components/CallToAction";
 import Faq from "@/components/Faq";
 import PageHeader from "@/components/PageHeader";
 import DynamicIcon from "@/helpers/DynamicIcon";
-import { Island } from "@/islands";
+import ContactForm from "@/components/ContactForm";
 import Base from "@/layouts/Base";
 import { getListPage } from "@/lib/content";
 
@@ -67,7 +67,7 @@ export default function Contact() {
             {/* Right Column - Contact Form */}
             <div className="col-12 lg:col-7">
               <div className="p-8 md:p-10 bg-white/5 rounded-2xl">
-                <Island name="ContactForm" props={{}} />
+                <ContactForm />
               </div>
             </div>
           </div>

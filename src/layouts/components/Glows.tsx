@@ -1,5 +1,5 @@
 // Decorative background pieces that were copy-pasted across many Astro pages.
-import type { CSSProperties } from "react";
+import { useEffect, useRef, type CSSProperties } from "react";
 
 export const heroGlowStyle: CSSProperties = {
   background:
@@ -15,11 +15,57 @@ export function HeroGlow({
   return <div className={className} style={heroGlowStyle} />;
 }
 
-/** Animated particle canvas (drawn by /scripts/particleCanvas.js). */
+/** Slowly rising white particles ("spores") drawn on a canvas. */
+export function ParticleCanvas({ className = "w-full" }: { className?: string }) {
+  const ref = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = ref.current;
+    const ctx = canvas?.getContext("2d");
+    if (!canvas || !ctx) return;
+
+    const mobile = window.innerWidth < 768;
+    const count = mobile ? 20 : 140;
+    const size = mobile ? 1000 : 2000;
+    const [minSize, maxSize, maxSpeed] = [0.2, 1.6, 0.1];
+    canvas.width = size;
+    canvas.height = size;
+
+    const particles = Array.from({ length: count }, () => ({
+      x: Math.random() * size,
+      y: Math.random() * size,
+      r: Math.random() * (maxSize - minSize) + minSize,
+      vy: Math.random() * maxSpeed - maxSpeed,
+    }));
+
+    let frame = 0;
+    const draw = () => {
+      ctx.clearRect(0, 0, size, size);
+      ctx.fillStyle = "#FFFFFF";
+      for (const p of particles) {
+        p.y += p.vy;
+        if (p.y < -20) {
+          p.y = size + Math.random() * 20;
+          p.x = Math.random() * size;
+        }
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      frame = requestAnimationFrame(draw);
+    };
+    draw();
+    return () => cancelAnimationFrame(frame);
+  }, []);
+
+  return <canvas ref={ref} className={className} aria-hidden="true" />;
+}
+
+/** Particle canvas positioned behind a page hero. */
 export function SporeCanvas({
   wrapperClass = "absolute top-0 left-0 w-full",
   innerClass = "h-100 w-full overflow-hidden -translate-y-10",
-  canvasClass = "heroSporeCanvas w-full",
+  canvasClass = "w-full",
 }: {
   wrapperClass?: string;
   innerClass?: string;
@@ -28,7 +74,7 @@ export function SporeCanvas({
   return (
     <div className={wrapperClass}>
       <div className={innerClass}>
-        <canvas className={canvasClass} />
+        <ParticleCanvas className={canvasClass} />
       </div>
     </div>
   );

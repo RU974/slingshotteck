@@ -1,6 +1,7 @@
 // Builds everything that goes into <head>: title, meta, canonical, Open Graph,
-// fonts, JSON-LD structured data and the site-wide scripts.
-// Ported from the old Base.astro so SEO output stays the same.
+// fonts and JSON-LD structured data.
+//   • renderHead()   — full <head> content, written into every pre-rendered page.
+//   • applyPageHead() — swaps the page-specific tags after client-side navigation.
 import config from "@/config/config.json";
 import social from "@/config/social.json";
 import theme from "@/config/theme.json";
@@ -31,7 +32,7 @@ function googleFontsUrl() {
 
 const toIso = (d?: Date | string) => (d ? new Date(d).toISOString() : undefined);
 
-export function renderHead(seo: SeoProps = {}, pathname = "/"): string {
+function pageHeadTags(seo: SeoProps = {}, pathname = "/"): string[] {
   const {
     title,
     meta_title,
@@ -191,14 +192,10 @@ export function renderHead(seo: SeoProps = {}, pathname = "/"): string {
     "@graph": [organization, website, webpage, breadcrumbSchema, ...extra].filter(Boolean),
   };
 
-  const gtm = config.google_tag_manager;
   const published = type === "article" ? toIso(date) : undefined;
   const modified = type === "article" ? toIso(updated ?? date) : undefined;
 
   return [
-    gtm.enable
-      ? `<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${esc(gtm.gtm_id)}');</script>`
-      : "",
     `<title>${esc(pageTitle)}</title>`,
     meta("name", "description", pageDescription),
     `<link rel="canonical" href="${esc(canonicalUrl)}" />`,
@@ -209,18 +206,7 @@ export function renderHead(seo: SeoProps = {}, pathname = "/"): string {
         ? "noindex,follow"
         : "index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1",
     ),
-    `<link rel="icon" href="/favicon.ico" sizes="any" />`,
-    `<link rel="icon" type="image/png" href="${esc(config.site.favicon)}" />`,
-    `<link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />`,
-    `<link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />`,
-    `<link rel="alternate" type="text/plain" title="LLM summary" href="/llms.txt" />`,
     meta("name", "author", author ?? config.metadata.meta_author),
-    meta("name", "theme-color", "#000000"),
-    `<link rel="preconnect" href="https://fonts.googleapis.com" />`,
-    `<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />`,
-    `<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />`,
-    `<link rel="preconnect" href="https://unpkg.com" crossorigin />`,
-    `<link rel="stylesheet" href="${esc(googleFontsUrl())}" />`,
     // Open Graph / social
     meta("property", "og:type", type),
     meta("property", "og:site_name", brand),
@@ -238,13 +224,56 @@ export function renderHead(seo: SeoProps = {}, pathname = "/"): string {
     meta("name", "twitter:image", ogImage),
     // Structured data (Organization, WebSite, WebPage, Breadcrumbs + page schema)
     `<script type="application/ld+json">${jsonLd(graph)}</script>`,
-    // GSAP + Lenis (CDN), then the site's own DOM scripts from /public/scripts
-    `<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.14.1/dist/gsap.min.js"></script>`,
-    `<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.14.1/dist/ScrollTrigger.min.js"></script>`,
-    `<script defer src="https://unpkg.com/lenis@1.3.17/dist/lenis.min.js"></script>`,
-    `<script defer src="/scripts/main.js"></script>`,
-    `<script type="module" src="/scripts/animations.js"></script>`,
-  ]
-    .filter(Boolean)
-    .join("\n    ");
+  ].filter(Boolean);
+}
+
+/** Tags that are the same on every page. */
+function siteHeadTags(): string[] {
+  const gtm = config.google_tag_manager;
+  return [
+    gtm.enable
+      ? `<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${esc(gtm.gtm_id)}');</script>`
+      : "",
+    `<link rel="icon" href="/favicon.ico" sizes="any" />`,
+    `<link rel="icon" type="image/png" href="${esc(config.site.favicon)}" />`,
+    `<link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />`,
+    `<link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />`,
+    `<link rel="alternate" type="text/plain" title="LLM summary" href="/llms.txt" />`,
+    meta("name", "theme-color", "#000000"),
+    `<link rel="preconnect" href="https://fonts.googleapis.com" />`,
+    `<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />`,
+    `<link rel="stylesheet" href="${esc(googleFontsUrl())}" />`,
+  ].filter(Boolean);
+}
+
+// Comment markers around the page-specific tags, so the browser can find and replace them.
+const START = "page-head";
+const END = "/page-head";
+
+/** Everything that goes into <head> for one page (used when pre-rendering). */
+export function renderHead(seo: SeoProps = {}, pathname = "/"): string {
+  return [...siteHeadTags(), `<!--${START}-->`, ...pageHeadTags(seo, pathname), `<!--${END}-->`].join("\n    ");
+}
+
+/** Browser only: replace the page-specific <head> tags after a client-side navigation. */
+export function applyPageHead(seo: SeoProps = {}, pathname = "/") {
+  const head = document.head;
+  const nodes = [...head.childNodes];
+  const start = nodes.find((n) => n.nodeType === Node.COMMENT_NODE && n.nodeValue === START);
+  const end = nodes.find((n) => n.nodeType === Node.COMMENT_NODE && n.nodeValue === END);
+  if (!start || !end) return;
+
+  const html = pageHeadTags(seo, pathname).join("");
+  // Skip the work if nothing changed (e.g. the first render after hydration).
+  let current = "";
+  for (let n = start.nextSibling; n && n !== end; n = n.nextSibling) {
+    if (n.nodeType === Node.ELEMENT_NODE) current += (n as Element).outerHTML;
+  }
+  const template = document.createElement("template");
+  template.innerHTML = html;
+  const next = [...template.content.childNodes].map((n) => (n as Element).outerHTML ?? "").join("");
+  if (current === next) return;
+
+  while (start.nextSibling && start.nextSibling !== end) start.nextSibling.remove();
+  end.parentNode!.insertBefore(template.content, end);
 }

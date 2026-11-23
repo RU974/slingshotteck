@@ -1,4 +1,4 @@
-import { HeroBeams, HeroGlow } from "@/components/Glows";
+import { HeroBeams, HeroGlow, ParticleCanvas } from "@/components/Glows";
 
 export default function PageHeader({ title, subtitle }: { title: string; subtitle: string }) {
   return (
@@ -8,7 +8,7 @@ export default function PageHeader({ title, subtitle }: { title: string; subtitl
           <h1 className="hasHighlight mb-6" dangerouslySetInnerHTML={{ __html: title }} />
           <p className="mb-5 text-lg" dangerouslySetInnerHTML={{ __html: subtitle }} />
           <div className="absolute inset-0 h-full w-full overflow-hidden -z-10">
-            <canvas className="heroSporeCanvas w-full opacity-70" />
+            <ParticleCanvas className="w-full opacity-70" />
           </div>
         </div>
         <HeroGlow />

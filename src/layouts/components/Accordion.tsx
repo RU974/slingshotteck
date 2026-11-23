@@ -1,8 +1,10 @@
-// Open/close is handled by /scripts/main.js via [data-accordion].
+import { useState } from "react";
+
 export default function Accordion({ title, content }: { title: string; content?: string }) {
+  const [open, setOpen] = useState(false);
   return (
-    <div className="accordion">
-      <button className="accordion-header" data-accordion>
+    <div className={`accordion ${open ? "active" : ""}`}>
+      <button type="button" className="accordion-header" aria-expanded={open} onClick={() => setOpen((o) => !o)}>
         {title}
         <svg className="accordion-icon" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path

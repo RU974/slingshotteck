@@ -17,7 +17,7 @@ export default function Careers() {
     <Base {...pageData}>
       <section className="section-ph pb-10 relative">
         <div className="container relative">
-          <SporeCanvas canvasClass="heroSporeCanvas w-full opacity-70" />
+          <SporeCanvas canvasClass="w-full opacity-70" />
           <div className="lg:max-w-4xl mx-auto text-center relative z-10">
             <h1 className="hasHighlight mb-0" dangerouslySetInnerHTML={{ __html: markdownify(pageData.page_header.title) }} />
           </div>

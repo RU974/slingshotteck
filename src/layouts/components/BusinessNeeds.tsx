@@ -1,6 +1,6 @@
-// Numbered "business needs" steps. Scroll-reveal is wired up in entry-client.tsx;
-// styles live in src/styles/business-needs.css.
-import type { CSSProperties } from "react";
+// Numbered "business needs" steps, revealed one by one as they scroll into view.
+// Styles live in src/styles/business-needs.css.
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { getSection } from "@/lib/content";
 
 interface BusinessNeedsSection {
@@ -22,11 +22,30 @@ const icons: Record<string, string> = {
 function StepCard({ number, title, content }: { number: string; title: string; content: string }) {
   const icon = icons[number] ?? icons["01"];
   const idx = parseInt(number, 10) - 1;
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.2 },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
   return (
     <div
-      className="bn-card group p-8 xl:px-32 xl:py-3 relative"
-      data-bn-card={number}
-      style={{ "--i": idx, "--w": `${100 - idx * 3}%` } as CSSProperties}
+      ref={ref}
+      className={`bn-card group p-8 xl:px-32 xl:py-3 relative ${visible ? "is-visible" : ""}`}
+      style={{ "--i": idx, "--w": `${100 - idx * 3}%`, "--indent": `${idx * 38}px` } as CSSProperties}
     >
       <div className="bn-inner flex items-center flex-col lg:flex-row lg:justify-between gap-6">
         <div className="bn-icon-wrap shrink-0">

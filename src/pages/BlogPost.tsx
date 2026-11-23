@@ -1,3 +1,4 @@
+import { ParticleCanvas } from "@/components/Glows";
 import { Share } from "@/components/Brand";
 import Faq from "@/components/Faq";
 import ImageMod from "@/components/ImageMod";
@@ -95,7 +96,7 @@ export default function BlogPost({ post }: { post: Entry<Post> }) {
         </div>
 
         <div className="absolute inset-0 h-full w-full overflow-hidden -z-10">
-          <canvas className="heroSporeCanvas w-full opacity-70" />
+          <ParticleCanvas className="w-full opacity-70" />
         </div>
         <div
           className="absolute left-1/2 top-0 -z-20 size-170 -translate-x-1/2 -translate-y-1/2 blur-2xl xl:size-300"

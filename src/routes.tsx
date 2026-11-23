@@ -1,7 +1,7 @@
-// URL -> page. Every page is pre-rendered to static HTML at build time; there is no client-side
-// router, so links are ordinary <a href> page loads (fast, SEO-friendly, and
-// compatible with the DOM scripts in /public/scripts).
-import type { ReactElement } from "react";
+// URL -> page, with React Router. The same <AppRoutes> renders on the server
+// (pre-rendering every page to static HTML at build time) and in the browser
+// (client-side navigation after the first page load).
+import { Route, Routes, useParams } from "react-router";
 import { getSinglePage } from "@/lib/content";
 import About from "@/pages/About";
 import Blog from "@/pages/Blog";
@@ -20,53 +20,60 @@ import ServicePost from "@/pages/ServicePost";
 import Services from "@/pages/Services";
 import type { BlogPost as Post, Service } from "@/types";
 
-type Match = { element: ReactElement; status: number };
-
-const staticRoutes: Record<string, () => ReactElement> = {
-  "/": () => <Home />,
-  "/about": () => <About />,
-  "/blog": () => <Blog />,
-  "/careers": () => <Careers />,
-  "/contact": () => <Contact />,
-  "/crm": () => <Crm />,
-  "/hrms": () => <Hrms />,
-  "/integrations": () => <Integrations />,
-  "/pricing": () => <Pricing />,
-  "/services": () => <Services />,
+const staticRoutes = {
+  "/": Home,
+  "/about": About,
+  "/blog": Blog,
+  "/careers": Careers,
+  "/contact": Contact,
+  "/crm": Crm,
+  "/hrms": Hrms,
+  "/integrations": Integrations,
+  "/pricing": Pricing,
+  "/services": Services,
 };
 
 // On-site blog posts (posts with external_url only link out).
 const blogPosts = () => getSinglePage<Post>("blog").filter((p) => !p.data.external_url);
 
-export function matchRoute(pathname: string): Match {
-  const path = pathname.replace(/\/+$/, "") || "/";
+function BlogPostRoute() {
+  const { slug } = useParams();
+  const post = blogPosts().find((p) => p.id === slug);
+  return post ? <BlogPost post={post} /> : <NotFound />;
+}
 
-  if (staticRoutes[path]) return { element: staticRoutes[path](), status: 200 };
+function CareerPostRoute() {
+  const { slug } = useParams();
+  const job = getSinglePage("careers").find((j) => j.id === slug);
+  return job ? <CareerPost job={job} /> : <NotFound />;
+}
 
-  const parts = path.split("/").filter(Boolean).map(decodeURIComponent);
+function ServicePostRoute() {
+  const { slug } = useParams();
+  const service = getSinglePage<Service>("services").find((s) => s.id === slug);
+  return service ? <ServicePost service={service} /> : <NotFound />;
+}
 
-  if (parts.length === 2) {
-    const [section, slug] = parts;
-    if (section === "blog") {
-      const post = blogPosts().find((p) => p.id === slug);
-      if (post) return { element: <BlogPost post={post} />, status: 200 };
-    }
-    if (section === "careers") {
-      const job = getSinglePage("careers").find((j) => j.id === slug);
-      if (job) return { element: <CareerPost job={job} />, status: 200 };
-    }
-    if (section === "services") {
-      const service = getSinglePage<Service>("services").find((s) => s.id === slug);
-      if (service) return { element: <ServicePost service={service} />, status: 200 };
-    }
-  }
+// Markdown pages in src/content/pages (privacy policy, terms, ...).
+function RegularRoute() {
+  const { slug } = useParams();
+  const page = getSinglePage("pages").find((p) => p.id === slug);
+  return page ? <Regular page={page} /> : <NotFound />;
+}
 
-  if (parts.length === 1) {
-    const page = getSinglePage("pages").find((p) => p.id === parts[0]);
-    if (page) return { element: <Regular page={page} />, status: 200 };
-  }
-
-  return { element: <NotFound />, status: 404 };
+export function AppRoutes() {
+  return (
+    <Routes>
+      {Object.entries(staticRoutes).map(([path, Page]) => (
+        <Route key={path} path={path} element={<Page />} />
+      ))}
+      <Route path="/blog/:slug" element={<BlogPostRoute />} />
+      <Route path="/careers/:slug" element={<CareerPostRoute />} />
+      <Route path="/services/:slug" element={<ServicePostRoute />} />
+      <Route path="/:slug" element={<RegularRoute />} />
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  );
 }
 
 /** Every indexable URL, for the sitemap. */

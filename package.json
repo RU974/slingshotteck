@@ -2,12 +2,12 @@
   "name": "slingshot-growth",
   "version": "2.0.0",
   "private": true,
-  "description": "Slingshotteck website: React + Vite, pre-rendered to a fully static site (no backend)",
+  "description": "Slingshotteck website: React + Vite, pre-rendered to static HTML and hydrated as a single-page app (no backend)",
   "author": "Slingshotteck",
   "license": "MIT",
   "type": "module",
   "engines": {
-    "node": ">=22.12.0"
+    "node": ">=22.22.0"
   },
   "scripts": {
     "dev": "node scripts/themeGenerator.js && concurrently -k -n theme,vite \"node scripts/themeGenerator.js --watch\" \"vite\"",
@@ -26,11 +26,14 @@
     "date-fns": "^4.4.0",
     "github-slugger": "^2.0.0",
     "gray-matter": "^4.0.3",
+    "gsap": "^3.15.1",
     "image-size": "^2.0.2",
+    "lenis": "^1.3.27",
     "marked": "^18.0.5",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "react-icons": "^5.6.0",
+    "react-router": "^8.5.2",
     "sharp": "^0.35.2",
     "tailwind-bootstrap-grid": "^7.0.0",
     "tailwindcss": "^4.3.1",

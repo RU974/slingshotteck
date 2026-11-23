@@ -1,5 +1,5 @@
 // Vite plugin: turns every `.md` file into a JS module at build time.
-//   import post from "./post.md"  ->  { data, html, body }
+//   import post from "./post.md"  ->  { data, html }
 // `data` is the YAML front matter, `html` is the rendered Markdown body.
 // Headings get GitHub-style ids so in-page anchors keep working.
 import GithubSlugger from "github-slugger";
@@ -28,7 +28,7 @@ export default function markdown() {
     transform(code, id) {
       if (!id.split("?")[0].endsWith(".md")) return null;
       const { data, content } = matter(code);
-      const mod = { data, html: renderMarkdown(content), body: content };
+      const mod = { data, html: renderMarkdown(content) };
       return { code: `export default ${JSON.stringify(mod)};`, map: null };
     },
   };

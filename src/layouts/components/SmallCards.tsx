@@ -18,8 +18,7 @@ export function FeatureCard({ logo, title, is_starred }: { logo: string; title: 
       {STAR_POSITIONS.map((pos) => (
         <svg
           key={pos}
-          data-is-starred={String(is_starred)}
-          className={`absolute z-10 ${pos} hidden`}
+          className={`absolute z-10 ${pos} ${is_starred ? "block" : "hidden"}`}
           width="23"
           height="23"
           viewBox="0 0 23 23"

@@ -1,5 +1,5 @@
 import ImageMod from "@/components/ImageMod";
-import { Island } from "@/islands";
+import LeadForm from "@/components/LeadForm";
 import { markdownify } from "@/lib/utils/textConverter";
 
 interface Props {
@@ -43,7 +43,7 @@ export default function LeadGeneration({ lead_generation }: Props) {
                     alt="ebook"
                     className="w-full max-w-76.75 mx-auto mb-12"
                   />
-                  <Island name="LeadForm" props={{}} />
+                  <LeadForm />
                 </div>
               </div>
             </div>

@@ -1,10 +1,13 @@
 // Renders one URL to HTML. Used at build time by scripts/prerender.mjs and by the dev server (plugins/devSsr.js).
+// The browser then hydrates the same tree (entry-client.tsx).
 import { StrictMode } from "react";
 import { renderToString } from "react-dom/server";
+import { StaticRouter } from "react-router";
+import App from "@/App";
 import config from "@/config/config.json";
 import { PageContext, type PageState } from "@/lib/page";
 import { renderHead } from "@/lib/seo";
-import { allPaths, matchRoute, prerenderPaths } from "@/routes";
+import { allPaths, prerenderPaths } from "@/routes";
 
 export { prerenderPaths };
 
@@ -16,16 +19,19 @@ export interface RenderResult {
 
 export function render(url: string): RenderResult {
   const pathname = new URL(url, "http://localhost").pathname;
-  const state: PageState = { pathname };
-  const { element, status } = matchRoute(pathname);
+  const state: PageState = {};
 
   const html = renderToString(
     <StrictMode>
-      <PageContext.Provider value={state}>{element}</PageContext.Provider>
+      <PageContext.Provider value={state}>
+        <StaticRouter location={url}>
+          <App />
+        </StaticRouter>
+      </PageContext.Provider>
     </StrictMode>,
   );
 
-  return { status, head: renderHead(state.seo, pathname), html };
+  return { status: state.status ?? 200, head: renderHead(state.seo, pathname), html };
 }
 
 const xmlEscape = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");

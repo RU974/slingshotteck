@@ -1,26 +1,75 @@
+import { useEffect, useRef, useState } from "react";
+import { useLocation } from "react-router";
 import { Logo } from "@/components/Brand";
 import config from "@/config/config.json";
 import menu from "@/config/menu.json";
-import { usePage } from "@/lib/page";
 import type { NavigationLink } from "@/types";
 
 const isActive = (pathname: string, url: string) => pathname === url || pathname === `${url}/`;
 
+const SCROLL_THRESHOLD = 200;
+
 export default function Header() {
-  const { pathname } = usePage();
+  const { pathname } = useLocation();
   const { main } = menu as { main: NavigationLink[] };
   const { navigation_button, settings } = config;
   const external = navigation_button.link.startsWith("http");
 
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [openSubmenu, setOpenSubmenu] = useState<string | null>(null);
+  const [hidden, setHidden] = useState(false);
+  const [bgHeight, setBgHeight] = useState(0);
+  const headerRef = useRef<HTMLElement>(null);
+  const menuOpenRef = useRef(menuOpen);
+  menuOpenRef.current = menuOpen;
+
+  // Close the mobile menu whenever the page changes.
+  useEffect(() => {
+    setMenuOpen(false);
+    setOpenSubmenu(null);
+    setHidden(false);
+  }, [pathname]);
+
+  // Hide the header when scrolling down, reveal it when scrolling up.
+  useEffect(() => {
+    let lastY = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      setHidden(!menuOpenRef.current && y > SCROLL_THRESHOLD && y >= lastY);
+      lastY = y;
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // Dark backdrop behind the open mobile menu, as tall as the header.
+  useEffect(() => {
+    const update = () => setBgHeight(menuOpen && headerRef.current ? headerRef.current.getBoundingClientRect().height : 0);
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, [menuOpen, openSubmenu]);
+
   return (
-    <header className={`header z-50 w-full transition-all duration-300 ${settings.sticky_header ? "fixed top-0" : ""}`}>
+    <header
+      ref={headerRef}
+      className={`header z-50 w-full transition-all duration-300 ${settings.sticky_header ? "fixed top-0" : ""} ${
+        hidden ? "hide" : ""
+      }`}
+    >
       <nav className="navbar container relative z-30">
         {/* logo */}
         <div className="order-0">
           <Logo />
         </div>
-        {/* navbar toggler (pure CSS via the hidden checkbox) */}
-        <input id="nav-toggle" type="checkbox" className="peer hidden" />
+        {/* navbar toggler (the checkbox drives the CSS `peer-checked:` styles) */}
+        <input
+          id="nav-toggle"
+          type="checkbox"
+          className="peer hidden"
+          checked={menuOpen}
+          onChange={(e) => setMenuOpen(e.target.checked)}
+        />
         <label
           htmlFor="nav-toggle"
           className="order-3 cursor-pointer flex items-center lg:hidden text-white lg:order-1 bg-dark/10 backdrop-blur-lg size-12 rounded-xl justify-center"
@@ -44,7 +93,13 @@ export default function Header() {
           {main.map((item) =>
             item.hasChildren ? (
               <li key={item.name} className="nav-item nav-dropdown group relative">
-                <input type="checkbox" id={`submenu-${item.name}`} className="peer hidden lg:hidden" />
+                <input
+                  type="checkbox"
+                  id={`submenu-${item.name}`}
+                  className="peer hidden lg:hidden"
+                  checked={openSubmenu === item.name}
+                  onChange={(e) => setOpenSubmenu(e.target.checked ? item.name : null)}
+                />
                 <label
                   htmlFor={`submenu-${item.name}`}
                   className={`nav-link inline-flex items-center ${
@@ -106,7 +161,7 @@ export default function Header() {
       </nav>
 
       {/* expanded menu background */}
-      <div className="bg-dark/50 backdrop-blur-sm -z-10" id="nav-menu-bg" />
+      <div className="bg-dark/50 backdrop-blur-sm -z-10" id="nav-menu-bg" style={{ height: bgHeight }} />
     </header>
   );
 }

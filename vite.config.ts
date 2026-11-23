@@ -5,11 +5,12 @@ import { defineConfig } from "vite";
 import devSsr from "./plugins/devSsr.js";
 import imageSizes from "./plugins/imageSizes.js";
 import markdown from "./plugins/markdown.js";
+import usedIcons from "./plugins/usedIcons.js";
 
 const src = (p: string) => fileURLToPath(new URL(`./src/${p}`, import.meta.url));
 
 export default defineConfig({
-  plugins: [markdown(), imageSizes(), react(), tailwindcss(), devSsr()],
+  plugins: [markdown(), imageSizes(), usedIcons(), react(), tailwindcss(), devSsr()],
   appType: "custom",
   resolve: {
     alias: [
@@ -26,5 +27,7 @@ export default defineConfig({
     outDir: "dist",
     emptyOutDir: true,
     assetsDir: "assets",
+    // One app bundle (~250 kB gzipped: React, React Router, GSAP, Lenis + all page content).
+    chunkSizeWarningLimit: 900,
   },
 });

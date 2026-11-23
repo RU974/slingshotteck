@@ -1,6 +1,6 @@
-// Pricing cards + section. Monthly/yearly toggle is animated by
-// /scripts/animations.js ([data-pricing-toggle]). Plan buttons are plain links
-// (set in src/content/pricing/-index.md, currently /contact).
+// Pricing cards + section, with an animated Monthly/Yearly toggle.
+// Plan buttons are plain links (set in src/content/pricing/-index.md, currently /contact).
+import { useEffect, useState } from "react";
 import { GradientBlob } from "@/components/Glows";
 import { getListPage } from "@/lib/content";
 import type { Button } from "@/types";
@@ -82,7 +82,25 @@ function InfoIcon() {
   );
 }
 
-export function PricingCard(plan: Plan) {
+type Billing = "monthly" | "yearly";
+
+/**
+ * Which price a card shows. `undefined` = initial state (monthly, no animation).
+ * Cards switch one after another (`delay` ms) for a staggered effect.
+ */
+function useStaggeredBilling(billing: Billing | undefined, delay: number) {
+  const [shown, setShown] = useState<Billing | undefined>(undefined);
+  useEffect(() => {
+    if (!billing) return;
+    const t = setTimeout(() => setShown(billing), delay);
+    return () => clearTimeout(t);
+  }, [billing, delay]);
+  return shown;
+}
+
+export function PricingCard({ billing, index = 0, ...plan }: Plan & { billing?: Billing; index?: number }) {
+  const shown = useStaggeredBilling(billing, index * 150);
+  const tagState = (mode: Billing) => (!shown ? "" : shown === mode ? "active" : "inactive");
   const {
     price,
     yearly_price,
@@ -126,12 +144,12 @@ export function PricingCard(plan: Plan) {
       <div className="leading-none relative mb-4">
         <span className="text-white text-h3 font-semibold price-tag opacity-0">I</span>
         <span className="block text-sm opacity-0 mt-2">I</span>
-        <span className="price-tag absolute left-0 top-0" data-price-tag-monthly>
+        <span className={`price-tag absolute left-0 top-0 ${tagState("monthly")}`}>
           <span className="text-white text-h3 font-semibold">{money(price)}</span>
           {!is_custom && <span className="ml-1 text-sm text-text">{price_suffix}</span>}
           {monthly_note && <span className="block mt-2 text-sm text-text-dark">{monthly_note}</span>}
         </span>
-        <span className="price-tag opacity-0 absolute left-0 top-0" data-price-tag-yearly>
+        <span className={`price-tag opacity-0 absolute left-0 top-0 ${tagState("yearly")}`}>
           <span className="text-white text-h3 font-semibold">{money(yearly_price)}</span>
           {!is_custom && <span className="ml-1 text-sm text-text">{yearly_price_suffix}</span>}
           {!is_custom && yearly_badge && (
@@ -187,6 +205,8 @@ interface PricingSectionProps {
 
 export function PricingSection({ title, content, isHome = true }: PricingSectionProps) {
   const pricingData = getListPage("pricing", "-index").data;
+  const [billing, setBilling] = useState<Billing | undefined>(undefined);
+  const yearly = billing === "yearly";
   const sectionTitle = title ?? pricingData.page_header?.title ?? "";
   const sectionContent = content ?? pricingData.page_header?.content ?? "";
 
@@ -203,17 +223,23 @@ export function PricingSection({ title, content, isHome = true }: PricingSection
           <div className="section-content">
             <div className="pricing-container">
               <div className="price-togger">
-                <input type="checkbox" data-pricing-toggle id="pricing-toggle" className="hidden" />
-                <label htmlFor="pricing-toggle" className="price-toggler-btn active">
+                <input
+                  type="checkbox"
+                  id="pricing-toggle"
+                  className="hidden"
+                  checked={yearly}
+                  onChange={(e) => setBilling(e.target.checked ? "yearly" : "monthly")}
+                />
+                <label htmlFor="pricing-toggle" className={`price-toggler-btn ${yearly ? "" : "active"}`}>
                   {pricingData.toggler?.monthly_label ?? "Monthly"}
                 </label>
-                <label htmlFor="pricing-toggle" className="price-toggler-btn">
+                <label htmlFor="pricing-toggle" className={`price-toggler-btn ${yearly ? "active" : ""}`}>
                   {pricingData.toggler?.yearly_label ?? "Yearly"}
                 </label>
               </div>
               <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-7 relative z-10">
-                {(pricingData.plans as Plan[]).map((plan) => (
-                  <PricingCard key={plan.title} {...plan} />
+                {(pricingData.plans as Plan[]).map((plan, i) => (
+                  <PricingCard key={plan.title} {...plan} billing={billing} index={i} />
                 ))}
               </div>
             </div>

@@ -1,6 +1,6 @@
 // Content layer: replaces Astro content collections.
 // Every Markdown file in src/content is compiled at build time by
-// plugins/markdown.js and bundled into the server build.
+// plugins/markdown.js and bundled into the app.
 
 export interface Entry<T = Record<string, any>> {
   /** File name without extension, e.g. "cloud-solutions" or "-index". */
@@ -8,11 +8,9 @@ export interface Entry<T = Record<string, any>> {
   data: T;
   /** Rendered HTML of the Markdown body. */
   html: string;
-  /** Raw Markdown body. */
-  body: string;
 }
 
-type MdModule = { data: Record<string, any>; html: string; body: string };
+type MdModule = { data: Record<string, any>; html: string };
 
 const files = import.meta.glob<MdModule>("/src/content/**/*.md", {
   eager: true,
@@ -47,7 +45,7 @@ for (const [path, mod] of Object.entries(files)) {
   const name = rel.slice(0, slash);
   const id = rel.slice(slash + 1).replace(/\.md$/, "");
   const withDefaults = defaults[name] ? defaults[name](mod.data) : mod.data;
-  const entry: Entry = { id, data: withDefaults, html: mod.html, body: mod.body };
+  const entry: Entry = { id, data: withDefaults, html: mod.html };
   if (!collections.has(name)) collections.set(name, []);
   collections.get(name)!.push(entry);
 }

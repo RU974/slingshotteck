@@ -1,3 +1,4 @@
+import { ParticleCanvas } from "@/components/Glows";
 import Badge from "@/components/Badge";
 import { getSection } from "@/lib/content";
 import type { Button } from "@/types";
@@ -37,7 +38,7 @@ export default function CallToAction() {
           }}
         />
         <div className="absolute top-1/2 -translate-y-1/2 h-1/2 w-full overflow-hidden">
-          <canvas className="heroSporeCanvas w-full" />
+          <ParticleCanvas className="w-full" />
         </div>
       </div>
     </section>

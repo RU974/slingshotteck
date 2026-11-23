@@ -1,7 +1,7 @@
 import Badge from "@/components/Badge";
 import CallToAction from "@/components/CallToAction";
 import Faq from "@/components/Faq";
-import { GradientBlob, HeroBeams, HeroGlow } from "@/components/Glows";
+import { GradientBlob, HeroBeams, HeroGlow, ParticleCanvas } from "@/components/Glows";
 import ImageMod from "@/components/ImageMod";
 import OurStory from "@/components/OurStory";
 import { TeamCard } from "@/components/SmallCards";
@@ -58,7 +58,7 @@ export default function About() {
             />
           </div>
           <div className="absolute inset-0 h-full w-full max-h-113 overflow-hidden -z-10">
-            <canvas className="heroSporeCanvas w-full opacity-70" />
+            <ParticleCanvas className="w-full opacity-70" />
           </div>
         </div>
         <HeroGlow />
